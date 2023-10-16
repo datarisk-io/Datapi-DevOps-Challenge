@@ -15,3 +15,10 @@ Adicionar um README ao projeto detalhando o processo e justificando as decisões
 Todos os refinamentos adicionados nos tópicos mencionados anteriormente, e demais ideias que possam melhorar o projeto serão considerados na avaliação da solução.
 
 Faça um fork desse projeto e envie um PR com a sua solução, o tempo de entrega é de no máximo 4 dias e será contabilizado a partir da data do fork.
+
+** Será avaliado:
+   - % do que foi entrege em relação ao que foi pedido
+   - Qualidade dos aquivos Terraform
+   - Boas práticas de infra e uso do kubernetes
+   - O que foi entregue está executando como pedido
+   - Uso eficiente em relação a custo de máquina
