@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>Fake.Core.Tasks</name></assembly>
+<members>
+<member name="M:Fake.Core.TaskRunner.runWithRetries``1(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,``0},System.Int32)">
+ <summary>
+ Retries the given function until a retry limit is reached or the function succeeds without exception.
+ </summary>
+
+ <param name="f">This function will be started.</param>
+ <param name="retries">A retry limit.</param>
+</member>
+<member name="M:Fake.Core.TaskRunner.waitFor(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.Boolean},System.TimeSpan,System.Int32,Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit})">
+ <summary>
+ Waits until the given function returns true or the timeout is reached.
+ </summary>
+
+ <param name="f">This function will be started.</param>
+ <param name="timeout">A System.TimeSpan representing the timeout.</param>
+ <param name="testMS">An interval at which FAKE checks if the function has succeeded.</param>
+ <param name="timeoutF">This function will be run if the timeout has been reached.</param>
+</member>
+<member name="T:Fake.Core.TaskRunner">
+ <summary>
+ Contains a helper which can be used to implement timeouts and retries.
+ </summary>
+</member>
+</members>
+</doc>

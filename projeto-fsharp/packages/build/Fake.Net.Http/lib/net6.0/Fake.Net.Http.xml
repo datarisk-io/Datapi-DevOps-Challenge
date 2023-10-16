@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>Fake.Net.Http</name></assembly>
+<members>
+<member name="M:Fake.Net.List.List.sequenceResultA``2(Microsoft.FSharp.Collections.FSharpList{Microsoft.FSharp.Core.FSharpResult{``0,Microsoft.FSharp.Collections.FSharpList{``1}}})">
+ <summary>
+ Transform a <c>list&lt;Result&gt;</c> into a <c>Result&lt;list&gt;</c>
+ and collect the results using apply.
+ </summary>
+ [omit]
+</member>
+<member name="M:Fake.Net.List.List.traverseResultA``3(Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpResult{``1,Microsoft.FSharp.Collections.FSharpList{``2}}},Microsoft.FSharp.Collections.FSharpList{``0})">
+ <summary>
+ Map a Result producing function over a list to get a new Result
+ using applicative style
+ <c>('a -&gt; Result&lt;&apos;b&gt;) -> &apos;a list -&gt; Result&lt;&apos;b list&gt;</c>
+ </summary>
+ [omit]
+</member>
+<member name="M:Fake.Net.List.List.sequenceAsyncA``1(Microsoft.FSharp.Collections.FSharpList{Microsoft.FSharp.Control.FSharpAsync{``0}})">
+ <summary>
+ Transform a <c>list&lt;Async&gt;</c> into a <c>Async&lt;list&gt;</c>
+ and collect the results using apply.
+ </summary>
+ [omit]
+</member>
+<member name="M:Fake.Net.List.List.traverseAsyncA``2(Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Control.FSharpAsync{``1}},Microsoft.FSharp.Collections.FSharpList{``0})">
+ <summary>
+ Map a Async producing function over a list to get a new Async
+ using applicative style
+ <c>('a -&gt; Async&lt;&apos;b&gt;) -> &apos;a list -&gt; Async&lt;&apos;b list&gt;</c>
+ </summary>
+ [omit]
+</member>
+<member name="T:Fake.Net.List.List">
+ <summary>
+ List extensions for traversing Result and Async types
+ Functions from <a href="fsharpforfunandprofit.com">fsharpforfunandprofit.com</a>, please see details
+ <a href="https://fsharpforfunandprofit.com/posts/elevated-world-5/">here</a>
+ </summary>
+</member>
+<member name="T:Fake.Net.Http.PostMethod">
+ <summary>
+ Option type for the HTTP verb
+ </summary>
+</member>
+<member name="T:Fake.Net.Http.DownloadInfo">
+<summary>
+ Contains validated Uri and FilePath info for further download
+</summary>
+</member>
+<member name="T:Fake.Net.Http.FilePath">
+<summary>
+ Type aliases for local file path and error messages
+</summary>
+</member>
+<member name="P:Fake.Net.Http.DownloadParameters.Path">
+<summary>
+ The name of the local file that is to receive the data
+</summary>
+</member>
+<member name="P:Fake.Net.Http.DownloadParameters.Uri">
+<summary>
+ The URI from which to download data
+</summary>
+</member>
+<member name="T:Fake.Net.Http.DownloadParameters">
+ <summary>
+ Input parameter type
+ </summary>
+</member>
+<member name="M:Fake.Net.Http.getWithHeaders(System.String,System.String,Microsoft.FSharp.Core.FSharpFunc{System.Net.Http.Headers.HttpRequestHeaders,Microsoft.FSharp.Core.Unit},System.String)">
+<summary>
+ Like &apos;get&apos; but allow to set headers and returns the response headers.
+
+ &lt;param name=&quot;userName&quot;&gt;The username to use with the request.&lt;/param&gt;
+ &lt;param name=&quot;password&quot;&gt;The password to use with the request.&lt;/param&gt;
+ &lt;param name=&quot;headerF&quot;&gt;A function which allows to manipulate the HTTP headers.&lt;/param&gt;
+ &lt;param name=&quot;url&quot;&gt;The URL to perform the POST operation.&lt;/param&gt;
+</summary>
+</member>
+<member name="M:Fake.Net.Http.upload(System.String,System.String)">
+ <summary>
+ Upload the given file to the given endpoint
+ </summary>
+
+ <param name="url">The URL to perform the POST operation.</param>
+ <param name="file">The file to upload.</param>
+</member>
+<member name="M:Fake.Net.Http.post(System.String,System.String,System.String,System.String)">
+ <summary>
+ Executes an HTTP POST command and retrieves the information.
+ It returns the response of the request, or null if we got 404 or nothing.
+ </summary>
+
+ <param name="url">The URL to perform the POST operation.</param>
+ <param name="userName">The username to use with the request.</param>
+ <param name="password">The password to use with the request.</param>
+ <param name="data">The data to post.</param>
+</member>
+<member name="M:Fake.Net.Http.postCommand(Microsoft.FSharp.Core.FSharpFunc{System.Net.Http.Headers.HttpRequestHeaders,Microsoft.FSharp.Core.Unit},System.String,System.String,System.String,System.String)">
+ <summary>
+ Executes an HTTP POST command and retrieves the information.
+ This function will automatically include a "source" parameter if the "Source" property is set.
+ It returns the response of the request, or null if we got 404 or nothing.
+ </summary>
+
+ <param name="headerF">A function which allows to manipulate the HTTP headers.</param>
+ <param name="url">The URL to perform the POST operation.</param>
+ <param name="userName">The username to use with the request.</param>
+ <param name="password">The password to use with the request.</param>
+ <param name="data">The data to post.</param>
+</member>
+<member name="M:Fake.Net.Http.postCommandAsync(Microsoft.FSharp.Core.FSharpFunc{System.Net.Http.Headers.HttpRequestHeaders,Microsoft.FSharp.Core.Unit},System.String,System.String,System.String,System.String)">
+ <summary>
+ Executes an HTTP POST command and retrieves the information.
+ This function will automatically include a "source" parameter if the "Source" property is set.
+ It returns the response of the request, or null if we got 404 or nothing.
+ </summary>
+
+ <param name="headerF">A function which allows to manipulate the HTTP headers.</param>
+ <param name="url">The URL to perform the POST operation.</param>
+ <param name="userName">The username to use with the request.</param>
+ <param name="password">The password to use with the request.</param>
+ <param name="data">The data to post.</param>
+</member>
+<member name="M:Fake.Net.Http.get(System.String,System.String,System.String)">
+ <summary>
+ Executes an HTTP GET command and retrieves the information.
+ It returns the response of the request, or null if we got 404 or nothing.
+ </summary>
+
+ <param name="userName">The username to use with the request.</param>
+ <param name="password">The password to use with the request.</param>
+ <param name="url">The URL to perform the GET operation.</param>
+</member>
+<member name="M:Fake.Net.Http.getAsync(Microsoft.FSharp.Core.FSharpFunc{System.Net.Http.Headers.HttpRequestHeaders,Microsoft.FSharp.Core.Unit},System.String,System.String,System.String)">
+ <summary>
+ Executes an HTTP GET command and retrieves the information.
+ It returns the response of the request, or null if we got 404 or nothing.
+ </summary>
+
+ <param name="headerF">A function which allows to manipulate the HTTP headers.</param>
+ <param name="userName">The username to use with the request.</param>
+ <param name="password">The password to use with the request.</param>
+ <param name="url">The URL to perform the GET operation.</param>
+</member>
+<member name="M:Fake.Net.Http.downloadFiles(Microsoft.FSharp.Collections.FSharpList{Fake.Net.Http.DownloadParameters})">
+ <summary>
+ Download list of Uri's in parallel
+ </summary>
+
+ <param name="input">List of <c>Http.DownloadParameters</c>. Each Http.DownloadParameters record type contains
+ Uri and file path</param>
+ <returns>List of string values contains a list of downloaded files paths</returns>
+</member>
+<member name="M:Fake.Net.Http.downloadFile(System.String,System.String)">
+ <summary>
+ Download file by the given file path and Uri
+ </summary>
+
+ <param name="localFilePath">A local file path to download file</param>
+ <param name="uri">A Uri to download from</param>
+ <returns>String value contains a downloaded file path</returns>
+</member>
+<member name="M:Fake.Net.Http.processResults``2(Microsoft.FSharp.Core.FSharpResult{``0,``1})">
+<summary>
+ Unwraps the Result type and throws an exception if download process failed
+</summary>
+</member>
+<member name="T:Fake.Net.Http">
+ <summary>
+ HTTP Client for downloading files
+ </summary>
+</member>
+</members>
+</doc>

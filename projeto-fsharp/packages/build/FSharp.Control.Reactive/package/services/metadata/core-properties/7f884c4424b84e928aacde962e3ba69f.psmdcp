@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<coreProperties xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties">
+  <dc:creator>Ryan Riley, Steffen Forkmann, Jared Hester</dc:creator>
+  <dc:description>A F#-friendly wrapper for the Reactive Extensions.</dc:description>
+  <dc:identifier>FSharp.Control.Reactive</dc:identifier>
+  <version>5.0.5</version>
+  <keywords>F# FSharp Reactive Extensions Rx</keywords>
+  <lastModifiedBy>NuGet.Build.Tasks.Pack, Version=6.1.0.103, Culture=neutral, PublicKeyToken=31bf3856ad364e35;</lastModifiedBy>
+</coreProperties>

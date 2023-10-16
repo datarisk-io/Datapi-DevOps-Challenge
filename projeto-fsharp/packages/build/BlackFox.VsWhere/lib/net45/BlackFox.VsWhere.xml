@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>BlackFox.VsWhere</name></assembly>
+<members>
+<member name="M:BlackFox.VsWhere.VsInstances.GetWithPackage(System.String,System.Boolean)">
+<summary>
+ Get VS2017+ instances that are completely installed and have a specific package ID installed
+</summary>
+</member>
+<member name="M:BlackFox.VsWhere.VsInstances.GetCompleted(System.Boolean)">
+<summary>
+ Get VS2017+ instances that are completely installed
+</summary>
+</member>
+<member name="M:BlackFox.VsWhere.VsInstances.GetAllWithLegacy">
+ <summary>
+ Get all Visual Studio instances including legacy VS instances (before VS2017: VS .NET 2002 to VS2015).
+ <para>Note that the information for legacy ones is limited.</para>
+ </summary>
+</member>
+<member name="M:BlackFox.VsWhere.VsInstances.GetAll">
+ <summary>
+ Get all VS2017+ instances (Visual Studio stable, preview, Build tools, ...)
+ <para>This method return instances that have installation errors and pre-releases.</para>
+ </summary>
+</member>
+<member name="M:BlackFox.VsWhere.VsInstances.GetLegacy">
+ <summary>
+ Get legacy VS instances (before VS2017: VS .NET 2002 to VS2015).
+ <para>Note that the information for legacy ones is limited.</para>
+ </summary>
+</member>
+</members>
+</doc>

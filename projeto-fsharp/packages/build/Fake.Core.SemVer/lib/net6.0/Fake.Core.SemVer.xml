@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>Fake.Core.SemVer</name></assembly>
+<members>
+<member name="P:Fake.Core.SemVerInfo.Build">
+<summary>
+ The optional build no.
+</summary>
+</member>
+<member name="P:Fake.Core.SemVerInfo.PreRelease">
+<summary>
+ The optional PreRelease version
+</summary>
+</member>
+<member name="P:Fake.Core.SemVerInfo.Patch">
+<summary>
+ PATCH version when you make backwards-compatible bug fixes.
+</summary>
+</member>
+<member name="P:Fake.Core.SemVerInfo.Minor">
+<summary>
+ MINOR version when you add functionality in a backwards-compatible manner.
+</summary>
+</member>
+<member name="P:Fake.Core.SemVerInfo.Major">
+<summary>
+ MAJOR version when you make incompatible API changes.
+</summary>
+</member>
+<member name="T:Fake.Core.SemVerInfo">
+ <summary>
+ Contains the version information. For parsing use <c>SemVer.parse</c>
+ </summary>
+ <remarks>
+ Note: If you use <c>{ version with Patch = myPath; Original = None }</c> to overwrite some parts of this
+ string make sure to overwrite <c>Original</c> to <c>None</c> in order to recalculate the version string.
+ </remarks>
+ <remarks>
+ For overwriting the <c>PreRelease</c> part use:
+ <c>{ Version with Original = None; PreRelease = PreRelease.TryParse "alpha.1" }</c>
+ </remarks>
+</member>
+<member name="T:Fake.Core.PreRelease">
+ <summary>
+ Information about PreRelease packages.
+ </summary>
+</member>
+<member name="M:Fake.Core.SemVer.parse(System.String)">
+ <summary>
+ Parses the given version string into a SemVerInfo which can be printed using ToString() or compared
+ according to the rules described in the <a href="http://semver.org/">SemVer docs</a>.
+ </summary>
+
+ <example>
+ <code lang="fsharp">
+ parse "1.0.0-rc.1"     &lt; parse "1.0.0"          // true
+ parse "1.2.3-alpha"    &gt; parse "1.2.2"          // true
+ parse "1.2.3-alpha2"   &gt; parse "1.2.3-alpha"    // true
+ parse "1.2.3-alpha002" &gt; parse "1.2.3-alpha1"   // false
+ parse "1.5.0-beta.2"   &gt; parse "1.5.0-rc.1"     // false
+ </code>
+ </example>
+</member>
+<member name="M:Fake.Core.SemVer.expand(Microsoft.FSharp.Collections.FSharpList{System.Char},System.String)">
+ <summary>
+ Splits the given version string by possible delimiters but keeps them as parts of resulting list.
+ </summary>
+</member>
+<member name="M:Fake.Core.SemVer.|Big|_|(System.String)">
+ <summary>
+ Matches if str is convertible to big int and not less than zero, and returns the bigint value.
+ </summary>
+</member>
+<member name="M:Fake.Core.SemVer.|Int|_|(System.String)">
+ <summary>
+ Matches if str is convertible to Int and not less than zero, and returns the value as UInt.
+ </summary>
+</member>
+<member name="M:Fake.Core.SemVer.isValid(System.String)">
+ <summary>
+ Returns true if input appears to be a parsable semver string
+ </summary>
+
+ <param name="version">The string version to check</param>
+</member>
+<member name="T:Fake.Core.SemVer">
+ <summary>
+ Parser which allows to deal with <a href="http://semver.org/">Semantic Versioning (SemVer)</a>.
+ Make sure to read the documentation in the <a href="guide/fake-core-semverinfo.html">SemVerInfo</a>
+ record as well if you manually create versions.
+ </summary>
+</member>
+<member name="T:Fake.Core.SemVerActivePattern">
+ <summary>
+ Contains active patterns which allow to deal with <a href="http://semver.org/">Semantic Versioning (SemVer)</a>.
+ </summary>
+</member>
+</members>
+</doc>
