@@ -23,7 +23,7 @@ Faça um fork e envie um PR com a sua solução, o tempo de entrega é de no má
 
 ## Será avaliado:
 
-- % do que foi entrege em relação ao que foi pedido.
+- % do que foi entregue em relação ao que foi pedido.
 - Qualidade dos aquivos Terraform.
 - Boas práticas de infra e uso do Kubernetes.
 - Corretude das tarefas.
