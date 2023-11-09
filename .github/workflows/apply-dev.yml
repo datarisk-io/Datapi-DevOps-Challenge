@@ -2,8 +2,6 @@ name: Apply terraform Instance AWS EC2
 
 on: 
   workflow_call:
-  
-    branches [ '*' ]
     paths:
       - 'terraform/**'
 
