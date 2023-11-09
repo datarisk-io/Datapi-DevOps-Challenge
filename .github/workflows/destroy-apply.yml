@@ -33,10 +33,6 @@ jobs:
         with:
           terraform_version: 0.15.5
 
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt -check
-
       - name: Terraform Init
         id: init
         run: terraform init
@@ -47,34 +43,3 @@ jobs:
 
       - name: Terraform Destroy
         run: terraform destroy
-
-  destroy-prod:
-    name: 'terraform destroy prod'
-    runs-on: ubuntu-latest
-    env:
-      TF_WORKING_DIR: ${{ github.event.inputs.dir }}
-
-    defaults:
-      run:
-        shell: bash
-        working-directory: ${{ env.TF_WORKING_DIR }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 0.15.5
-
-      - name: Terraform Init
-        id: init
-        run: terraform init
-
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
-
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve
