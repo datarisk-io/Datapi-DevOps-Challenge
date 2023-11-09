@@ -43,5 +43,5 @@ jobs:
         id: validate
         run: terraform validate -no-color
 
-      - name: Terraform Apply
-        run: terraform apply
+      - name: Terraform Apply 
+        run: terraform apply --auto-approve
