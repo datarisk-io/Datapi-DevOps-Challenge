@@ -35,11 +35,11 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init -backend=true -backend-config="config/dev/backend.hcl"
+        run: terraform init
 
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -var-file="config/dev/terraform.tfvars"
+        run: terraform apply -auto-approve
