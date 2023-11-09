@@ -33,7 +33,7 @@ jobs:
 
       - name: Terraform fmt
         id: fmt
-        run: terraform fmt
+        run: terraform fmt -check
 
       - name: Terraform Init
         id: init
@@ -43,5 +43,5 @@ jobs:
         id: validate
         run: terraform validate -no-color
 
-      - name: Terraform Apply 
-        run: terraform apply --auto-approve
+      - name: Terraform Apply
+        run: terraform apply
