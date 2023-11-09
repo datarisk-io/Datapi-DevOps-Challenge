@@ -2,8 +2,7 @@ name: Apply terraform Instance AWS EC2
 
 on:
   push:
-    branches: 
-      [ "master" ] 
+    branches: [ "master" ] 
     paths:
       - 'terraform/**'
 
