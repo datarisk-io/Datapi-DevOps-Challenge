@@ -29,9 +29,7 @@ jobs:
       # - name: Set up QEMU
       #   uses: docker/setup-qemu-action@v3
       - name: Set up QEMU
-        uses: tonistiigi/binfmt@v3
-        with:
-          registry: ghcr.io
+        uses: tonistiigi/binfmt@master
 
       - name: Log in no GitHub Container Registry
         uses: docker/login-action@v3
