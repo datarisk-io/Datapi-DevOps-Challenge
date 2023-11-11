@@ -1,8 +1,8 @@
 name: Apply terraform resources on folder 0003-terraform-gha with dev config
 
 on:
-  push:
-    branches: [master]
+  # push:
+  #   branches: [master]
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
