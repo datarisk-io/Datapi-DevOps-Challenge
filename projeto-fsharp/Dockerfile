@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0.413
+FROM mcr.microsoft.com/dotnet/sdk:6.0.413 as Build
 
 WORKDIR /app
 
@@ -12,8 +12,10 @@ RUN dotnet paket restore
 
 RUN dotnet fake run build.fsx -t "Build"
 
-COPY ./src/Server /app
+FROM mcr.microsoft.com/dotnet/sdk:6.0.413 as Run
+
+COPY --from=build /app/src/Server/out .
 
 EXPOSE 8085
 
-CMD ["./Server"]
+ENTRYPOINT ["./Server"]
