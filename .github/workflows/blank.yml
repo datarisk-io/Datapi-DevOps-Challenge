@@ -35,5 +35,6 @@ jobs:
       - name: Build e push Docker image
         run: |
            cd projeto-fsharp
+           export DOCKER_DEFAULT_PLATFORM=linux/arm64 
            docker build . --tag ghcr.io/vitor-csilva/api-devops-challenge:latest
            docker push ghcr.io/vitor-csilva/api-devops-challenge:latest
