@@ -25,21 +25,20 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Realizando checkout do repositório
         uses: actions/checkout@v4
-        
+
+      # - name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v3
+      - name: Set up QEMU
+        uses: tonistiigi/binfmt@v3
+        with:
+          registry: ghcr.io
+
       - name: Log in no GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      # - name: Set up QEMU
-      #   uses: tonistiigi/binfmt@v3
-      #   with:
-      #     registry: ghcr.io
-      
       
       # - name: Build e push Docker image
       #   run: |
