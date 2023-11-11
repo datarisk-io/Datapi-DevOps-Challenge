@@ -69,7 +69,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: projeto-fsharp
           platforms: linux/arm64
           push: true
           tags: ghcr.io/vitor-csilva/api-devops-challenge:arm
