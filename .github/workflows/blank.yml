@@ -10,6 +10,7 @@ on:
 env:
   REGISTRY: ghcr.io
 
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-and-push-image:
@@ -34,7 +35,7 @@ jobs:
           
       - name: Build e push Docker image
         run: |
-           cd projeto-fsharp
-           export DOCKER_DEFAULT_PLATFORM=linux/arm64 
-           docker build . --tag ghcr.io/vitor-csilva/api-devops-challenge:latest
-           docker push ghcr.io/vitor-csilva/api-devops-challenge:latest
+          cd projeto-fsharp
+          docker buildx create --use
+          docker buildx build --platform linux/arm64 --tag ghcr.io/vitor-csilva/api-devops-challenge:latest .
+          docker push ghcr.io/vitor-csilva/api-devops-challenge:latest
