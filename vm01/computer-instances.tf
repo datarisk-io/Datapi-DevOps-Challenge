@@ -1,4 +1,3 @@
-#criando vm 01
 resource "azurerm_linux_virtual_machine" "vm01" {
   name                            = "vm-linux01"
   resource_group_name             = azurerm_resource_group.dkgp.name
