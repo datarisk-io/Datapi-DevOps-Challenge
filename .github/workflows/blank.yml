@@ -31,12 +31,9 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: teste
-        run: |
-           ls -la
           
-      # - name: Build e push Docker image
-      #   run: |
-      #      docker build . --tag ghcr.io/vitor-csilva/api-devops-challenge:latest
-      #      docker push ghcr.io/vitor-csilva/api-devops-challenge:latest
+      - name: Build e push Docker image
+        run: |
+           cd projeto-fsharp
+           docker build . --tag ghcr.io/vitor-csilva/api-devops-challenge:latest
+           docker push ghcr.io/vitor-csilva/api-devops-challenge:latest
