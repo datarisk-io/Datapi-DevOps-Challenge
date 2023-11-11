@@ -1,4 +1,4 @@
-name: 'datadisk-apply-vm'
+name: 'datadisk-vm01'
 on:
   push:
     branches: [ "master" ]
@@ -10,9 +10,7 @@ permissions:
 jobs:
   terraform:
     name: 'Terraform'
-    runs-on: ubuntu-latest
-    environment: production
-    
+    runs-on: ubuntu-latest   
     defaults:
       run:
         shell: bash
@@ -20,6 +18,9 @@ jobs:
     steps:
     - name: Check Repository
       uses: actions/checkout@v3
+
+    - name: Change to vm01 directory
+      run: cd vm01
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
@@ -38,5 +39,5 @@ jobs:
       run: terraform plan -input=false
 
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/"master"' && github.event_name == 'push'
+      if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
       run: terraform apply -auto-approve -input=false
