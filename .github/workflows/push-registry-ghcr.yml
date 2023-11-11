@@ -1,0 +1,15 @@
+name: Docker Image GHCR
+
+on:
+  workflow_dispatch
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and push the Image
+        run: 
+          docker login --username richardneves --password ${{ secrets.GH_PAT }} ghcr.io
+          docker build . --tag ghcr.io/richardneves/projeto-fsharp:latest
+          docker push ghcr.io/richardneves:latest
