@@ -16,6 +16,6 @@ jobs:
         #   password: $ {{secrets.GH_PAT}}
         run: 
           docker login --username richardneves --password ${{secrets.GH_PAT}} ghcr.io
-          docker build --label "hello_docker" .
+          docker build --label "hello_docker"
           # docker push ghcr.io/richardneves/projeto-fsharp:latest
 
