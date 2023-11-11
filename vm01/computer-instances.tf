@@ -1,26 +1,26 @@
 resource "azurerm_linux_virtual_machine" "vm01" {
-  name                            = "vm-linux01"
+  name                            = var.vm_name
   resource_group_name             = azurerm_resource_group.dkgp.name
   location                        = azurerm_resource_group.dkgp.location
-  size                            = "Standard_B2ms"
-  admin_username                  = "datarisk-admin"
+  size                            = var.vm_size
+  admin_username                  = var.admin_username
   network_interface_ids = [
     azurerm_network_interface.vnic01.id,
   ]
 
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-lts"
-    version   = "latest"
+    publisher = var.image_publisher
+    offer     = var.image_offer
+    sku       = var.image_sku
+    version   = var.image_version
   }
   admin_ssh_key {
-    username   = "datarisk-admin"
-    public_key = file(".ssh/admin-vm01.pub")
+    username   = var.admin_username
+    public_key = file(var.admin_ssh_key_path)
   }
 
 os_disk {
-    storage_account_type = "Standard_LRS"
+    storage_account_type = var.os_disk_storage_account_type
     caching              = "ReadWrite"
   }
 }

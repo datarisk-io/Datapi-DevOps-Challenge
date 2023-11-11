@@ -1,4 +1,4 @@
 resource "azurerm_resource_group" "dkgp" {
-    name ="datarisk"
-    location = "eastus2"
+  name     = var.resource_group_name
+  location = var.resource_group_location
 }

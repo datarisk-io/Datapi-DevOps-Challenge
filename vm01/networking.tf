@@ -1,5 +1,5 @@
 resource "azurerm_virtual_network" "vnet01" {
-  name                = "vnet-01"
+  name                = var.vnet_name
   location            = azurerm_resource_group.dkgp.location
   resource_group_name = azurerm_resource_group.dkgp.name
   address_space       = ["10.0.0.0/16"]
@@ -7,7 +7,7 @@ resource "azurerm_virtual_network" "vnet01" {
 }
 
 resource "azurerm_subnet" "sub01" {
-  name                 = "sub-01"
+  name                 = var.subnet_name
   resource_group_name  = azurerm_resource_group.dkgp.name
   virtual_network_name = azurerm_virtual_network.vnet01.name
   address_prefixes     = ["10.0.1.0/24"]
@@ -16,7 +16,7 @@ resource "azurerm_subnet" "sub01" {
 
 
 resource "azurerm_network_security_group" "nsg01" {
-  name                = "nsg-01"
+  name                = var.nsg_name
   location            = azurerm_resource_group.dkgp.location
   resource_group_name = azurerm_resource_group.dkgp.name
 
@@ -51,7 +51,7 @@ resource "azurerm_subnet_network_security_group_association" "nsg01" {
 }
 
 resource "azurerm_public_ip" "puip01" {
-  name                = "ip-vm-linux01"
+  name                = var.public_ip_name
   resource_group_name = azurerm_resource_group.dkgp.name
   location            = azurerm_resource_group.dkgp.location
   allocation_method   = "Static"
@@ -59,7 +59,7 @@ resource "azurerm_public_ip" "puip01" {
 }
 
 resource "azurerm_network_interface" "vnic01" {
-  name                = "nic-vm-linux01"
+  name                = var.nic_name
   resource_group_name = azurerm_resource_group.dkgp.name
   location            = azurerm_resource_group.dkgp.location
 
