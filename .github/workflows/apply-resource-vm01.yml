@@ -1,11 +1,8 @@
 name: 'datadisk-vm01'
 on:
-  push:
-    branches: [ "master" ]
   pull_request:
-
-permissions:
-  contents: read
+    branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   terraform:
@@ -37,5 +34,4 @@ jobs:
       run: terraform plan
 
     - name: Terraform Apply
-      if:  github.event_name == 'pull_request'
       run: terraform apply -auto-approve

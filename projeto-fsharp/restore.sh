@@ -1,4 +1,4 @@
-set -ex
+#!/bin/sh
 
 dotnet tool restore
 dotnet paket install
