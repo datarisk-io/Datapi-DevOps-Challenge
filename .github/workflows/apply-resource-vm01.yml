@@ -14,6 +14,7 @@ jobs:
     defaults:
       run:
         shell: bash
+        working-directory: vm01
 
     steps:
     - name: Check Repository
