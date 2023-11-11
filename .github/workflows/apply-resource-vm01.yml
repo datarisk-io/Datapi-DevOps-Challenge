@@ -20,9 +20,6 @@ jobs:
     - name: Check Repository
       uses: actions/checkout@v3
 
-    - name: Change to vm01 directory
-      run: cd vm01
-
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
