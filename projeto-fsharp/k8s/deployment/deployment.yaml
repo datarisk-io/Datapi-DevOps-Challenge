@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: api-devops-challenge
+  name: api-devops-challenge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-devops-challenge
+  template:
+    metadata:
+      labels:
+        app: api-devops-challenge
+    spec:
+      containers:
+      - image: ghcr.io/vitor-csilva/api-devops-challenge:latest
+        name: api-devops-challenge
+        readinessProbe:
+          httpGet:
+            path: "/endpoint/get/hello"
+            port: 8085
+        # livenessProbe:
+        #   httpGet:
+        #     path: "/"
+        #     port: 8085
