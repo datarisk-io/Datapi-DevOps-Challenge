@@ -15,7 +15,7 @@ jobs:
         #   username: ${{ github.actor }}
         #   password: $ {{secrets.GH_PAT}}
         run: 
-          docker login ghcr.io -u richardneves --password-stdin ghcr.io
+          docker login --username richardneves --password ${{secrets.GH_PAT}} ghcr.io
           # docker build . --tag ghcr.io/richardneves/projeto-fsharp:latest
           # docker push ghcr.io/richardneves/projeto-fsharp:latest
 
