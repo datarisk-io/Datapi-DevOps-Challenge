@@ -8,8 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Build and push the Image
-        run: 
-          docker login --username richardneves --password ${{ secrets.GH_PAT }} ghcr.io
-          docker build . --tag ghcr.io/projeto-fsharp:latest
-          docker push ghcr.io/richardneves:latest
+      - name: Docker login
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: $ {{secrets.GH_PAT}}
+
+        # run: 
+        #   docker login --username richardneves --password ${{ secrets.GH_PAT }} ghcr.io
+        #   docker build . --tag ghcr.io/richardneves/projeto-fsharp:latest
+        #   docker push ghcr.io/richardneves:latest
