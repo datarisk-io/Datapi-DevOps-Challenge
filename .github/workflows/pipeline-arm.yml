@@ -14,7 +14,7 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-and-push-image:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     permissions:
       contents: read
@@ -39,15 +39,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Build e push Docker image
-        run: |
-          cd projeto-fsharp
-          docker build . --tag ghcr.io/vitor-csilva/api-devops-challenge:arm
-          docker push ghcr.io/vitor-csilva/api-devops-challenge:arm
-          
       # - name: Build e push Docker image
       #   run: |
       #     cd projeto-fsharp
-      #     docker buildx create --use
-      #     docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/vitor-csilva/api-devops-challenge:latest .
-      #     docker push ghcr.io/vitor-csilva/api-devops-challenge:latest
+      #     docker build . --tag ghcr.io/vitor-csilva/api-devops-challenge:arm
+      #     docker push ghcr.io/vitor-csilva/api-devops-challenge:arm
+          
+      - name: Build e push Docker image
+        run: |
+          cd projeto-fsharp
+          docker buildx create --name mybuilder
+          docker buildx use mybuilder
+          docker buildx build --platform linux/arm64 -t ghcr.io/vitor-csilva/api-devops-challenge:arm .
+          docker push ghcr.io/vitor-csilva/api-devops-challenge:arm
