@@ -31,22 +31,25 @@ jobs:
       #   uses: crazy-max/ghaction-docker-buildx@v3
       # - name: Set up QEMU
       #   uses: docker/setup-qemu-action@v3
-
-      - name: Setup Docker on macOS
-        uses: douglascamata/setup-docker-macos-action@v1-alpha
-
-      - name: Log in no GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build e push Docker image
+      - name: test
         run: |
-          cd projeto-fsharp
-          docker build . --tag ghcr.io/vitor-csilva/api-devops-challenge:arm
-          docker push ghcr.io/vitor-csilva/api-devops-challenge:arm
+          uname -p
+
+      # - name: Setup Docker on macOS
+      #   uses: douglascamata/setup-docker-macos-action@v1-alpha
+
+      # - name: Log in no GitHub Container Registry
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ${{ env.REGISTRY }}
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Build e push Docker image
+      #   run: |
+      #     cd projeto-fsharp
+      #     docker build . --tag ghcr.io/vitor-csilva/api-devops-challenge:arm
+      #     docker push ghcr.io/vitor-csilva/api-devops-challenge:arm
           
       # - name: Build e push Docker image
       #   run: |
