@@ -1,11 +1,12 @@
 name: 'send-dockerfile'
 on:
   pull_request:
-    branches: [ "master" ]
+    branches: [ "develop" ]
   workflow_dispatch:
 
 env:
   NAME_BUILD: "datarisk"
+  LOWERCASE_REPO_NAME: "${{ github.repository }} | tr '[:upper:]' '[:lower:]'"
 
 jobs:
   build:
@@ -28,14 +29,14 @@ jobs:
           password: ${{ secrets.TOKEN_GIT }}
   
       - name: Build Docker Image
-        run: docker build -t ghcr.io/${{ github.repository }}/${{ env.NAME_BUILD }}:latest -f Dockerfile .
+        run: docker build -t ghcr.io/${{ env.LOWERCASE_REPO_NAME }}/${{ env.NAME_BUILD }}:latest -f Dockerfile .
 
       - name: Tag Docker image with lasted and tag version
         run: |
-          docker tag ${{ env.NAME_BUILD }} ghcr.io/${{ github.repository }}/${{ env.NAME_BUILD }}:latest 
-          docker tag ${{ env.NAME_BUILD }} ghcr.io/${{ github.repository }}/${{ env.NAME_BUILD }}:${{github.sha}}
+          docker tag ${{ env.NAME_BUILD }} ghcr.io/${{ env.LOWERCASE_REPO_NAME }}/${{ env.NAME_BUILD }}:latest 
+          docker tag ${{ env.NAME_BUILD }} ghcr.io/${{ env.LOWERCASE_REPO_NAME }}/${{ env.NAME_BUILD }}:${{github.sha}}
   
       - name: Push to GitHub Container Registry, lasted and tag version
         run: |
-          docker push ghcr.io/${{ github.repository }}/${{ env.NAME_BUILD }}:latest 
-          docker push ghcr.io/${{ github.repository }}/${{ env.NAME_BUILD }}:${{github.sha}} 
+          docker push ghcr.io/${{ env.LOWERCASE_REPO_NAME }}/${{ env.NAME_BUILD }}:latest 
+          docker push ghcr.io/${{ env.LOWERCASE_REPO_NAME }}/${{ env.NAME_BUILD }}:${{github.sha}} 
