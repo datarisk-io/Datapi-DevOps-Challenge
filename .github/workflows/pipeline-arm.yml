@@ -54,11 +54,13 @@ jobs:
       #     cd projeto-fsharp
       #     docker build . --tag ghcr.io/vitor-csilva/api-devops-challenge:arm
       #     docker push ghcr.io/vitor-csilva/api-devops-challenge:arm
-          
+          # docker buildx create --name mybuilder
+          # docker buildx use mybuilder
       - name: Build e push Docker image
         run: |
           cd projeto-fsharp
-          docker buildx create --name mybuilder
-          docker buildx use mybuilder
+          docker buildx create --use
+          docker images
           docker buildx build . --platform linux/arm64 -t ghcr.io/vitor-csilva/api-devops-challenge:arm
+          docker images
           docker push ghcr.io/vitor-csilva/api-devops-challenge:arm
