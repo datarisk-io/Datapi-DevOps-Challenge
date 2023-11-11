@@ -16,5 +16,5 @@ jobs:
         #   password: $ {{secrets.GH_PAT}}
         run: 
           docker login ghcr.io -u richardneves -p $GH_PAT ghcr.io
-          docker build . --tag ghcr.io/richardneves/projeto-fsharp:latest
-          docker push ghcr.io/richardneves:latest
+          docker build . -t ghcr.io/richardneves/projeto-fsharp:latest
+          docker push ghcr.io/richardneves/projeto-fsharp:latest
