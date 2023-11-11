@@ -37,5 +37,5 @@ jobs:
       run: terraform plan
 
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/develop' && github.event_name == 'pull'
+      if: github.ref == 'refs/heads/develop' && github.event_name == 'pull_request'
       run: terraform apply -auto-approve
