@@ -49,5 +49,5 @@ jobs:
     - name: Push Docker image
       run: |
         short_commit=$(git rev-parse --short HEAD)
-        docker push ghcr.io/marublaize/projeto-fsharp:${short_commit}
-        docker push ghcr.io/marublaize/projeto-fsharp:latest
+        docker push ghcr.io/richardneves/projeto-fsharp:${short_commit}
+        docker push ghcr.io/richardneves/projeto-fsharp:latest
