@@ -4,12 +4,18 @@ metadata:
   name: api-devops-challenge-hpa
 spec:
   metrics:
-  - resource:
+  - type: Resource
+    resource:
       name: cpu
       target:
-        averageUtilization: 60
         type: Utilization
-    type: Resource
+        averageUtilization: 60
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageValue: 100Mi 
   minReplicas: 3
   maxReplicas: 6
   scaleTargetRef:

@@ -1,8 +1,8 @@
 build:
-	@docker build -t vitorcostasilva/api-devops-challenge:1.0 .
+	@docker build -t api-devops-challenge:latest .
 
 run:
-	@docker run -d -p 8085:8085 --name api-devops-challenge vitorcostasilva/api-devops-challenge:1.0
+	@docker run -d -p 8085:8085 --name api-devops-challenge api-devops-challenge:latest
 
 compose:
 	#export DOCKER_DEFAULT_PLATFORM=linux/arm64
