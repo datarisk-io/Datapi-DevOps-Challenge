@@ -25,3 +25,10 @@ spec:
           httpGet:
             path: "/endpoint/get/hello"
             port: 8085
+        resources:
+          requests:
+            cpu: 1  #(Pode ser informado por miliCpus 100m ou uma CPU inteira 1  isso porque aqui se define Vcpu)
+            memory: 512M
+          limits:
+            cpu: 2
+            memory: 1G
