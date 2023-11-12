@@ -1,0 +1,18 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: private-subnet-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 172.18.0.240-172.18.0.250 
+
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: private-subnet-advertisement
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - private-subnet-pool
