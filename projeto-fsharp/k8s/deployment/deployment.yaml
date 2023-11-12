@@ -21,7 +21,7 @@ spec:
           httpGet:
             path: "/endpoint/get/hello"
             port: 8085
-        # livenessProbe:
-        #   httpGet:
-        #     path: "/"
-        #     port: 8085
+        livenessProbe:
+          httpGet:
+            path: "/endpoint/get/hello"
+            port: 8085
