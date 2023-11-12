@@ -5,75 +5,72 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "web" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.instance_type
+  ami             = data.aws_ami.ubuntu.id
+  instance_type   = var.instance_type
   security_groups = ["acesso_geral"]
   user_data       = file("terraformando.sh")  
   tags = {
-    Name = "${var.environment}: App"
-    Env  = var.environment
-    Type = var.instance_type
+    Name          = "${var.environment}: App"
+    Env           = var.environment
+    Type          = var.instance_type
   }
 }
 
-# provider "kubernetes" {
-#   config_path = "~/.kube/config"
-# }
+resource "kubernetes_deployment" "projeto-fsharp" {
+  metadata {
+    name = "projeto-fsharp"
+    labels = {
+      app = "projeto-fsharp"
+    }
+  }
 
-# resource "kubernetes_deployment" "minha_aplicacao" {
-#   metadata {
-#     name = "minha-aplicacao"
-#     labels = {
-#       app = "minha-aplicacao"
-#     }
-#   }
+  spec {
+    replicas = 1
 
-#   spec {
-#     replicas = 3
+    selector {
+      match_labels = {
+        app = "projeto-fsharp"
+      }
+    }
 
-#     selector {
-#       match_labels = {
-#         app = "minha-aplicacao"
-#       }
-#     }
+    template {
+      metadata {
+        labels = {
+          app = "projeto-fsharp"
+        }
+      }
 
-#     template {
-#       metadata {
-#         labels = {
-#           app = "minha-aplicacao"
-#         }
-#       }
+      spec {
+        container {
+          image = "ghcr.io/richardneves/datapi-devops-challenge/datapi-devops-challenge:latest"
+          name  = "projeto-fsharp"
+          port {
+            container_port = 8085
+          }
+        }
+      }
+    }
+  }
+}
 
-#       spec {
-#         container {
-#           image = "SEU_REGISTRY/minha-aplicacao:latest"
-#           name  = "minha-aplicacao"
-#           port {
-#             container_port = 80
-#           }
-#         }
-#       }
-#     }
-#   }
-# }
 
-# resource "kubernetes_service" "minha_aplicacao_service" {
-#   metadata {
-#     name = "minha-aplicacao-service"
-#   }
+resource "kubernetes_service" "projeto-fsharp" {
+  metadata {
+    name = "projeto-fsharp"
+  }
 
-#   spec {
-#     selector = {
-#       app = "minha-aplicacao"
-#     }
+  spec {
+    selector = {
+      app = "projeto-fsharp"
+    }
 
-#     port {
-#       protocol = "TCP"
-#       port     = 80
-#       target_port = 80
-#     }
-#   }
-# }
+    port {
+      protocol = "TCP"
+      port     = 8085
+      target_port = 8085
+    }
+  }
+}
 
 # resource "kubernetes_ingress" "minha_aplicacao_ingress" {
 #   metadata {
