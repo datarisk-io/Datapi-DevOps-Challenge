@@ -1,6 +1,6 @@
 name: Apply terraform resources on folder 0003-terraform-gha with dev config
 
-on:
+on: [workflow_dispatch]
   # push:
   #   branches: [master]
 
