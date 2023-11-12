@@ -35,9 +35,8 @@ jobs:
 
     - name: Build and tag Docker image
       run: |
-        short_commit=$(git rev-parse --short HEAD)
         cd projeto-fsharp
-        docker build . -t ghcr.io/richard.neves/projeto-fsharp:latest -t ghcr.io/richardneves/projeto-fsharp:${short_commit}
+        docker build . -t ghcr.io/richard.neves/projeto-fsharp:latest -t ghcr.io/richardneves/projeto-fsharp:latest
 
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v1
@@ -48,6 +47,4 @@ jobs:
 
     - name: Push Docker image
       run: |
-        short_commit=$(git rev-parse --short HEAD)
-        docker push ghcr.io/richardneves/projeto-fsharp:${short_commit}
         docker push ghcr.io/richardneves/projeto-fsharp:latest
