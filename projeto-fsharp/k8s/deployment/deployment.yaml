@@ -1,3 +1,23 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-devops-challenge-hpa
+spec:
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 60
+        type: Utilization
+    type: Resource
+  minReplicas: 3
+  maxReplicas: 6
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api-devops-challenge
+    
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,8 +47,8 @@ spec:
             port: 8085
         resources:
           requests:
-            cpu: 1  #(Pode ser informado por miliCpus 100m ou uma CPU inteira 1  isso porque aqui se define Vcpu)
+            cpu: 50m
             memory: 512M
           limits:
-            cpu: 2
+            cpu: 100m
             memory: 1G
