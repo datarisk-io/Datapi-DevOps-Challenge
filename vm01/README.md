@@ -50,4 +50,8 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_vm01_id"></a> [vm01\_id](#output\_vm01\_id) | n/a |
+| <a name="output_vm01_name"></a> [vm01\_name](#output\_vm01\_name) | n/a |
+| <a name="output_vm01_size"></a> [vm01\_size](#output\_vm01\_size) | n/a |
