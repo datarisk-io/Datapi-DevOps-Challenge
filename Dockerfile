@@ -26,7 +26,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0
 LABEL org.opencontainers.image.source="https://github.com/richardneves/Datapi-DevOps-Challenge"
 WORKDIR /app
 
-COPY --from=build /app/src/Server/out .
+COPY --from=build /app/projeto-fsharp/src/Server/out .
 
 EXPOSE 8085
 
