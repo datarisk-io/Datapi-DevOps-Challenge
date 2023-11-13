@@ -1,0 +1,47 @@
+name: 'send-dockerfile'
+
+on:
+  pull_request:
+    branches: [ "develop","master" ]
+  workflow_dispatch:
+
+env:
+  NAME_BUILD: "datarisk"
+
+jobs:
+  build:
+    name: 'send-dockerfile'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: projeto-fsharp
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Login Docker Repository 
+        uses: azure/docker-login@v1
+        with:
+          login-server: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.TOKEN_GIT }}
+
+      - name: Convert Repository Name to Lowercase
+        id: string
+        uses: ASzc/change-string-case-action@v5
+        with:
+          string: "${{ github.repository }}"
+      
+      - name: Build Docker Image
+        run: docker build -t ghcr.io/${{ steps.string.outputs.lowercase }}/${{ env.NAME_BUILD }}:latest -f Dockerfile .
+
+      - name: Tag Docker Image
+        run: |
+          docker tag ghcr.io/${{ steps.string.outputs.lowercase }}/${{ env.NAME_BUILD }}:latest ghcr.io/${{ steps.string.outputs.lowercase }}/${{ env.NAME_BUILD }}:${{ github.sha }}
+  
+      - name: Push Docker Image
+        run: |
+          docker push ghcr.io/${{ steps.string.outputs.lowercase }}/${{ env.NAME_BUILD }}:latest 
+          docker push ghcr.io/${{ steps.string.outputs.lowercase }}/${{ env.NAME_BUILD }}:${{ github.sha }}

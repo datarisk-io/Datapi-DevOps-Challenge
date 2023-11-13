@@ -1,0 +1,15 @@
+# service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${servicename}
+  namespace: ${namespace}
+spec:
+  type: LoadBalancer
+  selector:
+    app: ${servicename}
+  ports:
+    - name: http
+      protocol: TCP
+      port: ${externalporthttp}
+      targetPort: ${containerporthttp}
