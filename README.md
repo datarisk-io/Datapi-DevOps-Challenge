@@ -19,7 +19,6 @@ O DockerFile é utilizado pelo arquivo de esteira na pasta .github/workflows pus
 
 Arquivos básicos onde fazem a construção da EC2 na AWS e em paralelo também fazem a criação do K3S dentro da EC2 da AWS que é uma opção escolhida ao kubernetes pela praticidade em sua configuração. E é realizado o deploy da aplicação via manifesto com shell script.
 
-
 # Destroy terraform
 
-Existe um arquivo onde é executado manualmente de destroy-apply.yml onde é possível destruir toda configuração realizado pelo terraform.
+Existe o arquivo terraform destroy-apply.yml onde é executado manualmente o "destroy" da aplicação criada pelo terraform.
