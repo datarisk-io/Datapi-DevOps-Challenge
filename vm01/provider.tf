@@ -5,13 +5,11 @@ terraform {
       version = "3.80.0"
     }
   }
-    backend "azurerm" {
-      resource_group_name  = "datarisk-group"
-      storage_account_name = "datariskstrg"
-      container_name       = "tfstatedatarisk"
-      key                  = "terraform.tfstate"
-      use_oidc = true
-
+  backend "remote" {
+    organization = "lucasbahr12"
+    workspaces {
+      name = "datarisk"
+    }
   }
 }
 

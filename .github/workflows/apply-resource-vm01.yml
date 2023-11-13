@@ -39,6 +39,12 @@ jobs:
 
     - name: Terraform Plan
       run: terraform plan
+      
+    - name: Upload Terraform State to Terraform Cloud
+      run: terraform state pull > tfstate
+      env:
+        TFE_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
+      if: always()
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
