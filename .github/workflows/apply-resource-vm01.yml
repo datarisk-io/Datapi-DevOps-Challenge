@@ -22,11 +22,9 @@ jobs:
       with:
         terraform_version: 1.0.0
 
-    - name: Log in with Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
+    - name: Configure Azure CLI
+      run: az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+      
     - name: Terraform Init
       run: terraform init
 
