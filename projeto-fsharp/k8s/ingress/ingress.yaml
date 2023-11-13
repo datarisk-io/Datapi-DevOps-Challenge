@@ -19,13 +19,3 @@ spec:
             name: api-devops-challenge
             port:
               number: 80
-  # - host: "httpd.demo.com"
-  #   http:
-  #     paths:
-  #     - path: /
-  #       pathType: Prefix
-  #       backend:
-  #         service:
-  #           name: httpd
-  #           port:
-  #             number: 80

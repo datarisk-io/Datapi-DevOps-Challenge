@@ -1,0 +1,9 @@
+/terraform/.terraform
+/terraform/terraform.tfstate
+/terraform/terraform.tfstate.backup
+/terraform/teste.sh
+
+# **/.terraform/*
+# terraform.tfstate
+# terraform.tfstate.backup
+# teste.sh
