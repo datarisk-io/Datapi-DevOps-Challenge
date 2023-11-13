@@ -17,6 +17,10 @@ resource "aws_instance" "web" {
 }
 
 resource "kubernetes_deployment" "projeto-fsharp" {
+    depends_on = [
+    aws_instance.web
+  ]
+  
   metadata {
     name = "projeto-fsharp"
     namespace = "default"
@@ -56,6 +60,9 @@ resource "kubernetes_deployment" "projeto-fsharp" {
 
 
 resource "kubernetes_service" "projeto-fsharp" {
+    depends_on = [
+    aws_instance.web
+  ]
   metadata {
     name = "projeto-fsharp"
   }
