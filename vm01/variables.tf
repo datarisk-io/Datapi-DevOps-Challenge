@@ -93,15 +93,3 @@ variable "resource_group_location" {
   default     = "eastus2"
   type        = string
 }
-
-variable "storage_name" {
-  description = "Nome do Storage"
-  default     = "tfstate"
-  type        = string
-}
-
-variable "storage_access" {
-  description = "Tipo de acesso do storage"
-  default     = "private"
-  type        = string
-}

@@ -6,9 +6,9 @@ terraform {
     }
   }
     backend "azurerm" {
-      resource_group_name  = var.resource_group_name
-      storage_account_name = var.storage_name
-      container_name       = var.storage_name
+      resource_group_name  = "datarisk-group"
+      storage_account_name = "datariskstrg"
+      container_name       = "tfstatedatarisk"
       key                  = "terraform.tfstate"
   }
 }

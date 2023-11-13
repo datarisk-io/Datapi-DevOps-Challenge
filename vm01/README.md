@@ -22,8 +22,6 @@
 | [azurerm_subnet.sub01](https://registry.terraform.io/providers/hashicorp/azurerm/3.80.0/docs/resources/subnet) | resource | Subnet criada para configuração na vm01 |
 | [azurerm_subnet_network_security_group_association.nsg01](https://registry.terraform.io/providers/hashicorp/azurerm/3.80.0/docs/resources/subnet_network_security_group_association) | resource | Associação da subnet ao grupo de segurança de rede |
 | [azurerm_virtual_network.vnet01](https://registry.terraform.io/providers/hashicorp/azurerm/3.80.0/docs/resources/virtual_network) | resource | Configuração da rede virtual
-| [azurerm_storage_account.storage](https://registry.terraform.io/providers/hashicorp/azurerm/3.80.0/docs/resources/storage_account) | resource | Storage de armazenamento
-| [azurerm_storage_container.container](https://registry.terraform.io/providers/hashicorp/azurerm/3.80.0/docs/resources/storage_container) | resource | Container de armazenamento no storage
 
 ## Inputs
 
@@ -35,8 +33,6 @@
 | <a name="input_image_publisher"></a> [image\_publisher](#input\_image\_publisher) | O publicador da imagem | `string` | `"Canonical"` | no |
 | <a name="input_image_sku"></a> [image\_sku](#input\_image\_sku) | O SKU da imagem | `string` | `"20_04-lts"` | no |
 | <a name="input_image_version"></a> [image\_version](#input\_image\_version) | A versão da imagem | `string` | `"latest"` | no |
-| <a name="input_storage_access"></a> [storage\_access](#input\_storage\_access) | Tipo de acesso do storage | `string` | `"private"` | no |
-| <a name="input_storage_name"></a> [storage\_name](#input\_storage\_name) | Nome do Storage | `string` | `"tfstate"` | no |
 | <a name="input_nic_name"></a> [nic\_name](#input\_nic\_name) | Nome da interface de rede (NIC) | `string` | `"nic-vm-linux01"` | no |
 | <a name="input_nsg_name"></a> [nsg\_name](#input\_nsg\_name) | Nome do Grupo de Segurança de Rede (NSG) | `string` | `"nsg-01"` | no |
 | <a name="input_os_disk_storage_account_type"></a> [os\_disk\_storage\_account\_type](#input\_os\_disk\_storage\_account\_type) | Tipo de conta de armazenamento para o disco do sistema operacional | `string` | `"Standard_LRS"` | no |
