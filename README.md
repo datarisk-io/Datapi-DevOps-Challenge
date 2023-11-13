@@ -1,30 +1,25 @@
 # Datapi DevOps Challenge
 
-Para melhor entendermos o seu nível técnico, nós preparamos este desafio como parte do nosso processo de contratação. Por isso, tenha em mente que não é necessário cumprir com todos os pontos mencionados, nem cumpri-los em uma ordem específica.
+Documentação do projeto
 
-O importante é entregar o que você conseguir fazer, com a devida documentação.
+# Instanciação de Maquina Virtual EC2 AWS:
 
-# Desafios
+Foi escolhida a cloud AWS para realização do projeto e Deploy por questão de familiaridade. Porém não afeta no funcionamento do projeto.
 
-Segue abaixo uma lista de desafios abrangendo várias áreas de responsabilidade para um DevOps no time do Datapi. Nossa sugestão é tentar seguir cada item na ordem apresentada, porém você está livre para atuar nos pontos que quiser e tiver mais familiaridade.
+Onde é utilizado pelo arquivo apply-dev.yml para deploy na AWS. Utilizando Steps e jobs basicos para entrega da maquina EC2 na AWS 
 
-- Instanciar uma VM numa cloud provider. Recomendação: Microsoft Azure.
-    - Criar a configuração dessa VM usando uma ferramenta de IaC (Infrastructure as Code). Recomendação: Terraform.
-    - Criar um job de CI (Continuous Integration) para aplicar a configuração da ferramenta de provisionamento. Recomendação: GitHub Actions.
-- Adicionar um Dockerfile à aplicação disponibilizada na pasta `projeto-fsharp/` para containerizar o mesmo. Note que foi utilizada a linguagem F# (.NET) para escrever a aplicação. Para facilitar o entendimento do projeto, adicionamos um README.md com instruções de teste e uso do mesmo localmente. Você deverá ser capaz de traduzir essas instruções para a criação do Dockerfile.
-    - Criar um job de CI para enviar a imagem gerada para um Docker Registry. Recomendação: GitHub Container Registry.
-- Criar os manifestos YAML para hospedar a aplicação usando Kubernetes. Nesse ponto os testes podem ser realizados apenas localmente, porém devem ser apresentados os arquivos YAML criados.
-    * Utilizar IaC para configurar o Kubernetes. Recomendação: Terraform.
-    * Configurar a hospedagem a partir do registry gerado na tarefa anterior.
-    * Caso possua mais familiaridade, sinta-se motivado a customizar mais as configurações (secrets, ingress, etc.).
-- Adicionar um README ao projeto detalhando o processo e justificando as decisões tomadas. Recomendação: Markdown. Todos os refinamentos adicionados nos tópicos mencionados anteriormente, e demais ideias que possam melhorar o projeto serão considerados na avaliação da solução.
+# Dockerfile:
 
-Faça um fork e envie um PR com a sua solução, o tempo de entrega é de no máximo 4 dias e será contabilizado a partir da data do fork.
+Foi realizado a construção do Docker file MultiStage onde em primeiro momento é possível baixar a imagem da Microsoft com a versão 6.0 do SDK para o bom teste e funcionamento do projeto, realizar copia dos arquivos e pastas principais para aplicação do restore.sh e criação do build. 
+Na segunda etapa de build é possível realizar a copia do build e armazenar em uma pasta especifica onde será utiliza o resultado do build a exposição da porta e utilização do arquivo ./Server em ENTRYPOINT inicialização em tempo de execução do container.
 
-## Será avaliado:
+O DockerFile é utilizado pelo arquivo de esteira na pasta .github/workflows push-registry-ghcr.yml onde existe um job basico de conexão, build e push da imagem para o registry do github onde é possível localizar em packages do repositorio.
 
-- % do que foi entregue em relação ao que foi pedido.
-- Qualidade dos aquivos Terraform.
-- Boas práticas de infra e uso do Kubernetes.
-- Corretude das tarefas.
-- Uso eficiente em relação ao custo de máquina.
+# Arquivos Terraform
+
+Arquivos básicos onde fazem a construção da EC2 na AWS e em paralelo também fazem a criação do K3S dentro da EC2 da AWS que é uma opção escolhida ao kubernetes pela praticidade em sua configuração. E é realizado o deploy da aplicação via manifesto com shell script.
+
+
+# Destroy terraform
+
+Existe um arquivo onde é executado manualmente de destroy-apply.yml onde é possível destruir toda configuração realizado pelo terraform.

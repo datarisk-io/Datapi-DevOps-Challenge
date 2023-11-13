@@ -1,7 +1,5 @@
 resource "aws_security_group" "acesso_geral" {
   name = "acesso_geral"
-  // vpc_id = "vpc-0c1cb11038b243da9"
-  // security_group = [ "acesso_geral" ]
   description = "grupo de dev"
 
   ingress {
@@ -71,7 +69,7 @@ resource "aws_security_group" "acesso_geral" {
   }
 
   tags = {
-    Name = "Wordpress_Mysql"
+    Name = "my-app"
   }
 
 }
