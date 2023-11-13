@@ -33,3 +33,4 @@ jobs:
       - name: Terraform Plan
         id: plandev
         run: terraform plan
+        working-directory: terraform
