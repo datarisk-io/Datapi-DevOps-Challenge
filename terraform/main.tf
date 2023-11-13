@@ -23,7 +23,7 @@ resource "kubernetes_deployment" "projeto-fsharp" {
   
   metadata {
     name = "projeto-fsharp"
-    namespace = "default"
+    namespace = "projeto-fsharp"
     labels = {
       app = "projeto-fsharp"
     }
