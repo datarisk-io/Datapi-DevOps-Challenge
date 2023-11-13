@@ -1,10 +1,9 @@
 name: Terraform Plan
 
 on:
-  push: # test
-    branches:
-      - main
-      - master
+  pull_request:
+    paths:
+      - terraform/**
 
 jobs:
   plan-dev:
