@@ -3,8 +3,10 @@ name: Build and Push Project
 
 on:
   push:
-    branches: [ "master" ]
-    # branches: [ "master","develop" ]
+    branches: [ "master","develop" ]
+    paths:
+      - 'projeto-fsharp/Dockerfile'
+      - 'projeto-fsharp/**'
 
 env:
   REGISTRY: ghcr.io

@@ -1,30 +1,99 @@
-# Datapi DevOps Challenge
+# Documentação Devops Challenge
 
-Para melhor entendermos o seu nível técnico, nós preparamos este desafio como parte do nosso processo de contratação. Por isso, tenha em mente que não é necessário cumprir com todos os pontos mencionados, nem cumpri-los em uma ordem específica.
+## Sobre
 
-O importante é entregar o que você conseguir fazer, com a devida documentação.
+Toda a construção do projeto foi utilizado o conceito de namespace, por questões de organização e também por motivos de controle sobre o acesso.
 
-# Desafios
+Como apoio na organização dos códigos e branches foi utilizada a extensão `Git-Flow`. 
 
-Segue abaixo uma lista de desafios abrangendo várias áreas de responsabilidade para um DevOps no time do Datapi. Nossa sugestão é tentar seguir cada item na ordem apresentada, porém você está livre para atuar nos pontos que quiser e tiver mais familiaridade.
+# Requisitos para utilização do script
 
-- Instanciar uma VM numa cloud provider. Recomendação: Microsoft Azure.
-    - Criar a configuração dessa VM usando uma ferramenta de IaC (Infrastructure as Code). Recomendação: Terraform.
-    - Criar um job de CI (Continuous Integration) para aplicar a configuração da ferramenta de provisionamento. Recomendação: GitHub Actions.
-- Adicionar um Dockerfile à aplicação disponibilizada na pasta `projeto-fsharp/` para containerizar o mesmo. Note que foi utilizada a linguagem F# (.NET) para escrever a aplicação. Para facilitar o entendimento do projeto, adicionamos um README.md com instruções de teste e uso do mesmo localmente. Você deverá ser capaz de traduzir essas instruções para a criação do Dockerfile.
-    - Criar um job de CI para enviar a imagem gerada para um Docker Registry. Recomendação: GitHub Container Registry.
-- Criar os manifestos YAML para hospedar a aplicação usando Kubernetes. Nesse ponto os testes podem ser realizados apenas localmente, porém devem ser apresentados os arquivos YAML criados.
-    * Utilizar IaC para configurar o Kubernetes. Recomendação: Terraform.
-    * Configurar a hospedagem a partir do registry gerado na tarefa anterior.
-    * Caso possua mais familiaridade, sinta-se motivado a customizar mais as configurações (secrets, ingress, etc.).
-- Adicionar um README ao projeto detalhando o processo e justificando as decisões tomadas. Recomendação: Markdown. Todos os refinamentos adicionados nos tópicos mencionados anteriormente, e demais ideias que possam melhorar o projeto serão considerados na avaliação da solução.
+Segue todos os requisitos necessários para utilização do script: 
 
-Faça um fork e envie um PR com a sua solução, o tempo de entrega é de no máximo 4 dias e será contabilizado a partir da data do fork.
+- 1- Realizar a Instalação do Docker.
 
-## Será avaliado:
+- 2- Realizar a instalação do Make(Ferramenta utilizada para automatizar o processo de contrução de imagens docker).
 
-- % do que foi entregue em relação ao que foi pedido.
-- Qualidade dos aquivos Terraform.
-- Boas práticas de infra e uso do Kubernetes.
-- Corretude das tarefas.
-- Uso eficiente em relação ao custo de máquina.
+Segue os passos para instalação em sistemas Linux(Ubuntu e Debian):
+```
+$ sudo apt-get update
+$ sudo apt-get install make
+
+```
+
+# Dockerfile
+
+O `dockerfile` na qual está localizado na raiz do projeto `projeto-fsharp` foi desenvolvido utilizando boas práticas como Multi-stage builds, priorizando sempre a redução do tamanho da imagem e garantindo que as layers sejam executadas de forma performática.
+Imagens utilizadas:
+- Builder: mcr.microsoft.com/dotnet/sdk:6.0.413
+- Runtime: mcr.microsoft.com/dotnet/aspnet:6.0.0
+
+Apesar do formato yaml ser bem legível, foi documentado o `Dockerfile.yaml` a partir de comentários todos os passos realizados e a definição de cada passo.
+
+<!-- ![Alt text](./doc/dockerfile.png "Dockerfile") -->
+
+# Ambiente de Desenvolvimento
+
+Foi criado para o projeto um ambiente de desenvolvimento para execução e testes da API.
+
+Para o ambiente de desenvolvimento utilizamos o `Make` que é uma ferramenta utilizada para automações de processos sendo muito útil para ambiente de desenvolvimento aumentando a produtividade e eficiência, sendo assim todo o processo de build da imagem, run e compose build foram utilizando essa ferramenta.
+
+## docker-compose.yaml
+
+O `docker-compose.yaml` na qual está localizado na raiz do projeto foi construido com todas as instruções necessárias para execução e testes da API, dessa forma proporcionou uma melhor eficiencia no desenvolvimento.
+
+## Utilização do Script
+
+Atualmente existem 3 funcionalidades disponíveis para utilização do script, sendo elas:
+1-build:
+    O comando `build` executa a construção da imagem a partir das instruções que estão presentes no `Dockerfile.yaml` incluindo o nome da imagem sendo `api-devops-challenge:latest`.
+    A partir do diretório raiz do projeto execute o comando abaixo:
+```
+$ make build
+```
+
+2-run:
+    O comando `run` executa a imagem `api-devops-challenge:latest` gerada a partir do comando de build visto anteriormente. 
+    A partir do diretório raiz do projeto execute o comando abaixo:
+
+```
+$ make run
+```
+
+3-compose:
+    O comando `compose` ele é o responsável por subir todo o projeto e pronto para ser utilizado.
+    Este comando executa a construção da imagem a partir das instruções que estão presentes no `Dockerfile.yaml`, e faz o export das portas necessárias para acesso a aplicação.
+    A partir do diretório raiz do projeto execute o comando abaixo:
+
+```
+$ make compose
+```
+
+# k8s
+
+A ferramenta utilizada para simulação do ambiente kubernetes foi o `kind` onde foi criado 1 control-plane e 2 data-planes para o nosso cluster, todas essas definições foram feitas no arquivo `config.yaml` disponível no diretório `/k8s/kind/config.yaml`.
+
+Todos os manifestos utilizados para deploy no cluster k8s como deployment, service, ingress e etc estão disponíveis e que podem ser acessado a partir do caminho `/k8s`.
+
+Contamos também com a automação desenvolvida a partir do script `apply.sh` localizado também na raiz do projeto na qual ele é o responsável por realizar toda a criação do cluster, fazer as aplicações dos manifestos e deixar tudo pronto para o usuário.
+Dessa forma faz com que todo o ambiente fique disponível com apenas a execução do mesmo:
+(necessário ser executado a partir do diretório raiz do projeto)
+
+```
+$ ./apply.sh
+
+```
+
+# Pipeline CI/CD Git Hub Actions
+
+Foram criados 2 workflows sendo eles:
+
+- pipeline-build-push.yml
+    Pipeline responsável por fazer toda a automação build, gerar versão\tag, realizar o push da imagem para o repositório do `ghcr.io`.
+
+```
+Obs: A imagem gerada é compatível com processadores x86(linux/amd64) e ARM(linux/arm64) e ambos estão disponíveis no repositório do `ghcr.io`.
+```
+
+- pipeline-provision.yml
+    Pipeline responsável por fazer o provisionamento da infra infraestrutura na Azure Cloud. 

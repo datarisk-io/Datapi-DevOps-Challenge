@@ -6,7 +6,7 @@ COPY . .
 RUN ./restore.sh && \
     dotnet fake run build.fsx -t "Build" 
 
-#Iniciando Server. (Multistaging)
+#Iniciando Server. (Multi-stage)
 FROM mcr.microsoft.com/dotnet/aspnet:6.0.0 AS runtime
 WORKDIR /api
 EXPOSE 8085
