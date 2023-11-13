@@ -20,7 +20,7 @@ resource "azurerm_network_security_group" "nsg01" {
   location            = azurerm_resource_group.dkgp.location
   resource_group_name = azurerm_resource_group.dkgp.name
 
-   security_rule {
+  security_rule {
     name                       = "Allow-RDP"
     priority                   = 100
     direction                  = "Inbound"

@@ -6,19 +6,19 @@ variable "kub_config" {
 
 variable "name_space" {
   description = "Nome do namespace"
-  default     = "space-datarisk" 
+  default     = "space-datarisk"
   type        = string
 }
 
 variable "name_service" {
   description = "Nome do serviço"
-  default     = "api-datarisk" 
+  default     = "api-datarisk"
   type        = string
 }
 
 variable "image_docker" {
   description = "Imagem do Docker"
-  default     = "ghcr.io/lucasbahr/datapi-devops-challenge/datarisk:latest" 
+  default     = "ghcr.io/lucasbahr/datapi-devops-challenge/datarisk:latest"
   type        = string
 }
 
