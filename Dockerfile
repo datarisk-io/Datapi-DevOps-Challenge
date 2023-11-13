@@ -31,3 +31,5 @@ EXPOSE 8085
 
 # Command to run the app when the container starts
 CMD ["dotnet", "Server.dll"]
+
+# test
