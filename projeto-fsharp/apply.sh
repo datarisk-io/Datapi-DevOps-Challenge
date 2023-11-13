@@ -24,6 +24,9 @@ function _apply_manifests () {
     kubectl apply -f ./k8s/service/service.yaml
     kubectl apply -f ./k8s/ingress/deploy.yaml
     sleep 360
+    echo -e "\n---> Caso oocorra problema ao aplicar o ingress, aguarde mais alguns minutos e tente rodar executar novamente de forma mannual: \n"
+    echo -e "Command:kubectl apply -f ./k8s/ingress/ingress.yaml"
+    echo -e "\nAplicando ingress:\n"
     kubectl apply -f ./k8s/ingress/ingress.yaml
 }
 
