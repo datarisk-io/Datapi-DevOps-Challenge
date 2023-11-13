@@ -8,6 +8,9 @@ on:
 
 jobs:
   plan-dev:
+    permissions:
+      id-token: 'write'
+
     name: 'Terraform plan DEV'
     runs-on: 'ubuntu-latest'
 
