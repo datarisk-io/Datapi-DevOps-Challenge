@@ -16,90 +16,90 @@ resource "aws_instance" "web" {
   }
 }
 
-# resource "kubernetes_deployment" "projeto-fsharp" {
-#     depends_on = [
-#     aws_instance.web
-#   ]
+resource "kubernetes_deployment" "projeto-fsharp" {
+    depends_on = [
+    aws_instance.web
+  ]
   
+  metadata {
+    name = "projeto-fsharp"
+    namespace = "projeto-fsharp"
+    labels = {
+      app = "projeto-fsharp"
+    }
+  }
+
+  spec {
+    replicas = 1
+
+    selector {
+      match_labels = {
+        app = "projeto-fsharp"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "projeto-fsharp"
+        }
+      }
+
+      spec {
+        container {
+          image = "ghcr.io/richardneves/datapi-devops-challenge/datapi-devops-challenge:latest"
+          name  = "projeto-fsharp"
+          port {
+            container_port = 8085
+          }
+        }
+      }
+    }
+  }
+}
+
+
+resource "kubernetes_service" "projeto-fsharp" {
+    depends_on = [
+    aws_instance.web
+  ]
+  metadata {
+    name = "projeto-fsharp"
+  }
+
+  spec {
+    selector = {
+      app = "projeto-fsharp"
+    }
+
+    port {
+      protocol = "TCP"
+      port     = 8085
+      target_port = 8085
+    }
+  }
+}
+
+# resource "kubernetes_ingress" "minha_aplicacao_ingress" {
 #   metadata {
-#     name = "projeto-fsharp"
-#     namespace = "projeto-fsharp"
-#     labels = {
-#       app = "projeto-fsharp"
-#     }
+#     name = "minha-aplicacao-ingress"
 #   }
 
 #   spec {
-#     replicas = 1
+#     rule {
+#       host = "meu-dominio.com"
 
-#     selector {
-#       match_labels = {
-#         app = "projeto-fsharp"
-#       }
-#     }
-
-#     template {
-#       metadata {
-#         labels = {
-#           app = "projeto-fsharp"
+#       http {
+#         path {
+#           path_type = "Prefix"
+#           path      = "/"
 #         }
-#       }
 
-#       spec {
-#         container {
-#           image = "ghcr.io/richardneves/datapi-devops-challenge/datapi-devops-challenge:latest"
-#           name  = "projeto-fsharp"
-#           port {
-#             container_port = 8085
-#           }
+#         backend {
+#           service_name = kubernetes_service.minha_aplicacao_service.metadata[0].name
+#           service_port = kubernetes_service.minha_aplicacao_service.spec[0].port[0].port
 #         }
 #       }
 #     }
 #   }
 # }
-
-
-# resource "kubernetes_service" "projeto-fsharp" {
-#     depends_on = [
-#     aws_instance.web
-#   ]
-#   metadata {
-#     name = "projeto-fsharp"
-#   }
-
-#   spec {
-#     selector = {
-#       app = "projeto-fsharp"
-#     }
-
-#     port {
-#       protocol = "TCP"
-#       port     = 8085
-#       target_port = 8085
-#     }
-#   }
-# }
-
-# # resource "kubernetes_ingress" "minha_aplicacao_ingress" {
-# #   metadata {
-# #     name = "minha-aplicacao-ingress"
-# #   }
-
-# #   spec {
-# #     rule {
-# #       host = "meu-dominio.com"
-
-# #       http {
-# #         path {
-# #           path_type = "Prefix"
-# #           path      = "/"
-# #         }
-
-# #         backend {
-# #           service_name = kubernetes_service.minha_aplicacao_service.metadata[0].name
-# #           service_port = kubernetes_service.minha_aplicacao_service.spec[0].port[0].port
-# #         }
-# #       }
-# #     }
-# #   }
-# # }
