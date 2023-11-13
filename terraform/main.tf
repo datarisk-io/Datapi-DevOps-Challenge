@@ -19,6 +19,7 @@ resource "aws_instance" "web" {
 resource "kubernetes_deployment" "projeto-fsharp" {
   metadata {
     name = "projeto-fsharp"
+    namespace = "default"
     labels = {
       app = "projeto-fsharp"
     }
