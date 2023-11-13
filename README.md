@@ -88,12 +88,14 @@ $ ./apply.sh
 
 Foram criados 2 workflows sendo eles:
 
-- pipeline-build-push.yml
-    Pipeline responsável por fazer toda a automação build, gerar versão\tag, realizar o push da imagem para o repositório do `ghcr.io`.
+- `pipeline-build-push.yml`
+
+Pipeline responsável por fazer toda a automação build, gerar versão\tag, realizar o push da imagem para o repositório do `ghcr.io`.
 
 ```
 Obs: A imagem gerada é compatível com processadores x86(linux/amd64) e ARM(linux/arm64) e ambos estão disponíveis no repositório do `ghcr.io`.
 ```
 
-- pipeline-provision.yml
-    Pipeline responsável por fazer o provisionamento da infra infraestrutura na Azure Cloud. 
+- `pipeline-provision.yml`
+
+Pipeline responsável por fazer o provisionamento da infra infraestrutura na Azure Cloud. 
