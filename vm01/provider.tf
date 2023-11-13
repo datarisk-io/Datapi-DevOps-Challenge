@@ -10,7 +10,7 @@ terraform {
       storage_account_name = "datariskstrg"
       container_name       = "tfstatedatarisk"
       key                  = "terraform.tfstate"
-      use_oidc             = true
+      
   }
 }
 
