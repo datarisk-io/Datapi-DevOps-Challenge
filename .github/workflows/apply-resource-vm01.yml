@@ -4,6 +4,10 @@ on:
     branches: [ "develop","master" ]
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   terraform:
     name: 'Terraform'
