@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-services-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    # nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx #Irá ser injetado a regra dentro do ingress que contém essa classe.
+  rules:
+  # digitar esse dns o mesmo será redirecionado para esse service.
+  - host: "api-devops-challenge.demo.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: api-devops-challenge
+            port:
+              number: 80

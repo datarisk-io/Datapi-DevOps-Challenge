@@ -1,0 +1,60 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-devops-challenge-hpa
+spec:
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 60
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageValue: 100Mi 
+  minReplicas: 3
+  maxReplicas: 6
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api-devops-challenge
+    
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: api-devops-challenge
+  name: api-devops-challenge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-devops-challenge
+  template:
+    metadata:
+      labels:
+        app: api-devops-challenge
+    spec:
+      containers:
+      - image: ghcr.io/vitor-csilva/api-devops-challenge:latest
+        name: api-devops-challenge
+        readinessProbe:
+          httpGet:
+            path: "/endpoint/get/hello"
+            port: 8085
+        livenessProbe:
+          httpGet:
+            path: "/endpoint/get/hello"
+            port: 8085
+        resources:
+          requests:
+            cpu: 50m
+            memory: 512M
+          limits:
+            cpu: 100m
+            memory: 1G

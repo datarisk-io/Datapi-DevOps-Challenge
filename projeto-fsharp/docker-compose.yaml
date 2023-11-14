@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  api-devops-challenge:
+    # image: vitorcostasilva/api-devops-challenge:1.0
+    build:
+      context: .
+    container_name: api-devops-challenge
+    ports:
+      - 8085:8085
