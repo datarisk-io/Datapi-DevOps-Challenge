@@ -56,9 +56,11 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
         run:  cd ./repository-files/vm-azure/ && ~/terraform apply -auto-approve
 
-      - name: Salvando o Terraform Output
-        id: save_output
-        run: echo "::set-output name=public_ip_address::$(cd cd ./repository-files/vm-azure/ && ~/terraform output public_ip_address)"
+      - name: Tempo de espera antes de mostrar o IP
+        run: sleep "${{ github.event.inputs.wait-time }}" || sleep "2m"
+
+      - name: Show Public IP
+        run: echo "Public IP Address $(cd ./repository-files/ && ~/terraform output public_ip_address)"
 
       - name: Salvando mudanças do Backend TFState
         uses: actions-js/push@master
@@ -67,10 +69,3 @@ jobs:
           directory: ./repository-files/vm-azure/
           message: Atualizando o Terraform State
           branch: master
-
-  print_output:
-    needs: terraform
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Print Output
-        run: echo ${{ needs.terraform.outputs.public_ip_address }}
