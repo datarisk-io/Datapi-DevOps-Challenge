@@ -32,17 +32,17 @@ jobs:
       - name: Terraform Init
         env:
           ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
         run: cd cd ./repository-files/vm-azure/ && ls -la && ~/terraform init 
 
       - name: Terraform Plan
         env:
           ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
         run: cd cd ./repository-files/vm-azure/ && ~/terraform plan -destroy 
 
       - name: Tempo de espera antes do destroy
@@ -51,9 +51,9 @@ jobs:
       - name: Terraform Destroy
         env:
           ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
         run: cd cd ./repository-files/vm-azure/ &&  ~/terraform apply -destroy -auto-approve 
 
       - name: Salvando o Backend TFState
