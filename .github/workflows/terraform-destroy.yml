@@ -43,7 +43,7 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
-        run: cd ./repository-files/vm-azure/ && ~/terraform plan -destroy 
+        run: cd ./repository-files/vm-azure/ && ls -la && ~/terraform plan -destroy 
 
       - name: Tempo de espera antes do destroy
         run:  sleep  "${{ github.event.inputs.wait-time }}" || sleep "2m"
@@ -54,7 +54,7 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
-        run: cd ./repository-files/vm-azure/ &&  ~/terraform apply -destroy -auto-approve 
+        run: cd ./repository-files/vm-azure/ && ls -la &&  ~/terraform destroy -auto-approve 
 
       - name: Salvando o Backend TFState
         uses: actions-js/push@master
