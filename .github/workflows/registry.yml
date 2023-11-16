@@ -1,0 +1,15 @@
+name: CI para as imagens Docker
+
+on:
+  push
+
+jobs:
+  buildar_e_publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Builda e sobe a imagem para o registry do github
+        run: |
+          docker login --username emanuel-ribeiro --password ${{ secrets.PERSONAL_GITHUB_TOKEN }} ghcr.io
+          docker build . --tag ghcr.io/emanuel-ribeiro/projeto-fsharp:latest
+          docker push ghcr.io/emanuel-ribeiro/projeto-fsharp:latest

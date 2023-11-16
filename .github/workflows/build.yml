@@ -1,0 +1,46 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main  # ajuste conforme necessário
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
+
+      - name: Build Docker Image
+        run: |
+          echo "{\"auths\":{\"$NEXUS_DOCKER_REGISTRY_HOST\":{\"username\":\"$NEXUS_USER\",\"password\":\"$NEXUS_PASS\"},\"$CI_REGISTRY\":{\"username\":\"$CI_DEPLOY_USER\",\"password\":\"$CI_DEPLOY_PASSWORD\"}}}" > $HOME/.docker/config.json
+          docker build \
+            --file "${CI_PROJECT_DIR}/.ci/Dockerfile" \
+            --build-arg NEXUS_PASS=$NEXUS_PASS \
+            --build-arg pass=$CI_DEPLOY_PASSWORD \
+            --tag "$RELEASE_IMAGE" \
+            "${CI_PROJECT_DIR}"
+
+      - name: Push Docker Image
+        run: docker push "$RELEASE_IMAGE"
+
+  deploy-k8s-dev:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/dev')
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to Kubernetes (Dev)
+        run: |
+          # Coloque aqui os comandos para implantar no Kubernetes Dev
+        env:
+          RELEASE_IMAGE: $CI_REGISTRY_IMAGE/$CI_PROJECT_NAME:${{ github.ref_name }}
+
+# Adicione outras etapas de implantação conforme necessário
