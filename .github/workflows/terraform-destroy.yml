@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: master
-          path: cd ./repository-files/
+          path: ./repository-files/
 
       - name: Terraform Init
         env:
