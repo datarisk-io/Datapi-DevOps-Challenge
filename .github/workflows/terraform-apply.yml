@@ -56,12 +56,6 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
         run:  cd ./repository-files/vm-azure/ && ~/terraform apply -auto-approve
 
-      - name: Tempo de espera antes de mostrar o IP
-        run: sleep "${{ github.event.inputs.wait-time }}" || sleep "2m"
-
-      - name: Show Public IP
-        run: echo "Public IP Address $(cd ./repository-files/ && ~/terraform output public_ip_address)"
-
       - name: Salvando mudanças do Backend TFState
         uses: actions-js/push@master
         with:
