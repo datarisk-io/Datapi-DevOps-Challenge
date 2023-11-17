@@ -1,4 +1,4 @@
-name: CI para as imagens Docker
+name: teste do registry do github
 
 on:
   workflow_dispatch:
