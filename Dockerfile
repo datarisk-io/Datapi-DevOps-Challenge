@@ -1,4 +1,3 @@
-# Etapa 1: Build da aplicação
 FROM mcr.microsoft.com/dotnet/sdk:6.0.413 AS build
 
 WORKDIR /app
@@ -15,7 +14,6 @@ RUN ./restore.sh
 # Compilar a aplicação
 RUN dotnet fake run build.fsx -t "Build"
 
-# Etapa 2: Criar uma imagem mínima com os arquivos compilados usando o servidor Nginx
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 
 WORKDIR /app

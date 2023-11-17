@@ -47,26 +47,26 @@ jobs:
     needs: [ build ]
     runs-on: ubuntu-latest
     steps:
-      - name: Set the Kubernetes context
+      - name: definindo context do k8s
         uses: azure/k8s-set-context@v2
         with:
           method: service-account
-          k8s-url: <server-url>
+          k8s-url: <url-do-server>
           k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
 
-      - name: Checkout source code
+      - name: checkout no codigo
         uses: actions/checkout@v3
 
-      - name: Deploy to the Kubernetes cluster
+      - name: Deploy no cluster
         uses: azure/k8s-deploy@v1
         with:
-          namespace: default
+          namespace: datarisk
           manifests: |
             kubernetes/deployment.yaml
             kubernetes/ingress.yaml
             kubernetes/service.yaml
           images: |
-            ghcr.io/username/package:${{ github.sha }}
+            ghcr.io/emanuel-ribeiro/projeto-fsharp:${{ github.sha }}
 
       
       
