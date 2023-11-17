@@ -62,9 +62,7 @@ jobs:
         with:
           namespace: datarisk
           manifests: |
-            kubernetes/deployment.yaml
-            kubernetes/ingress.yaml
-            kubernetes/service.yaml
+            k8s-services.yml
           images: |
             ghcr.io/emanuel-ribeiro/projeto-fsharp:${{ github.sha }}
 
