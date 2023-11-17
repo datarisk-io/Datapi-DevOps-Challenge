@@ -1,0 +1,86 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: projeto-fsharp
+  namespace: datarisk
+spec:
+  selector:
+    app: projeto-fsharp
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8085
+      targetPort: 8085
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: projeto-fsharp
+  namespace: datarisk
+spec:
+  rules:
+    - host: projeto-fsharp.datarisk.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: projeto-fsharp
+                port:
+                  number: 8085
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: datarisk
+  name: projeto-fsharp
+  labels:
+    app: projeto-fsharp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: projeto-fsharp
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: projeto-fsharp
+    spec:
+      containers:
+        - name: projeto-fsharp
+          image: ${IMAGE}
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: projeto-fsharp
+          ports:
+            - containerPort: 8085
+          resources:
+            limits:
+              cpu: "200m"
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          livenessProbe:
+            tcpSocket:
+              port: 8085
+            initialDelaySeconds: 30
+            timeoutSeconds: 3
+            periodSeconds: 10
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /endpoint/get/hello
+              port: 8085
+            initialDelaySeconds: 30
+            timeoutSeconds: 60
+            periodSeconds: 30
+            failureThreshold: 6

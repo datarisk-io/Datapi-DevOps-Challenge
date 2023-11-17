@@ -1,0 +1,70 @@
+name: deploy das aplicações
+
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Ambiente para deploy'
+        required: true
+        default: 'dev'
+        options:
+          - dev
+          - prod
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Logando no registry do github
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: emanuel-ribeiro
+          password: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+
+      - name: builda e faz o push da imagem docker
+        uses: docker/build-push-action@v3
+        env:
+          registry: ghcr.io
+          username: emanuel-ribeiro
+          password: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+        with:
+          push: true
+          tags: |
+            ghcr.io/emanuel-ribeiro/projeto-fsharp:latest
+            ghcr.io/emanuel-ribeiro/projeto-fsharp:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+  
+  deploy:
+    name: Deploy
+    if: github.ref == 'refs/heads/master'
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: definindo context do k8s
+        uses: azure/k8s-set-context@v2
+        with:
+          method: service-account
+          k8s-url: <url-do-server>
+          k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+
+      - name: checkout no codigo
+        uses: actions/checkout@v3
+
+      - name: Deploy no cluster
+        uses: azure/k8s-deploy@v1
+        with:
+          namespace: datarisk
+          manifests: |
+            k8s-services.yml
+          images: |
+            ghcr.io/emanuel-ribeiro/projeto-fsharp:${{ github.sha }}
+
+      
+      

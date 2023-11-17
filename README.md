@@ -1,30 +1,65 @@
-# Datapi DevOps Challenge
+## README - Projeto de Infraestrutura com Terraform e Docker
 
-Para melhor entendermos o seu nível técnico, nós preparamos este desafio como parte do nosso processo de contratação. Por isso, tenha em mente que não é necessário cumprir com todos os pontos mencionados, nem cumpri-los em uma ordem específica.
+Este repositório contém scripts Terraform para provisionar uma infraestrutura na Microsoft Azure, juntamente com um Dockerfile para construir e executar uma aplicação F#. Abaixo estão detalhados os principais componentes do projeto e as decisões tomadas durante a implementação.
 
-O importante é entregar o que você conseguir fazer, com a devida documentação.
+### Estrutura do Projeto
 
-# Desafios
+- **main.tf**: Define a infraestrutura na Azure, incluindo grupos de recursos, redes virtuais, sub-redes, grupos de segurança de rede, IP público, interface de rede, e uma máquina virtual Linux.
 
-Segue abaixo uma lista de desafios abrangendo várias áreas de responsabilidade para um DevOps no time do Datapi. Nossa sugestão é tentar seguir cada item na ordem apresentada, porém você está livre para atuar nos pontos que quiser e tiver mais familiaridade.
+- **Dockerfile**: Descreve a construção da imagem Docker para a aplicação F#.
 
-- Instanciar uma VM numa cloud provider. Recomendação: Microsoft Azure.
-    - Criar a configuração dessa VM usando uma ferramenta de IaC (Infrastructure as Code). Recomendação: Terraform.
-    - Criar um job de CI (Continuous Integration) para aplicar a configuração da ferramenta de provisionamento. Recomendação: GitHub Actions.
-- Adicionar um Dockerfile à aplicação disponibilizada na pasta `projeto-fsharp/` para containerizar o mesmo. Note que foi utilizada a linguagem F# (.NET) para escrever a aplicação. Para facilitar o entendimento do projeto, adicionamos um README.md com instruções de teste e uso do mesmo localmente. Você deverá ser capaz de traduzir essas instruções para a criação do Dockerfile.
-    - Criar um job de CI para enviar a imagem gerada para um Docker Registry. Recomendação: GitHub Container Registry.
-- Criar os manifestos YAML para hospedar a aplicação usando Kubernetes. Nesse ponto os testes podem ser realizados apenas localmente, porém devem ser apresentados os arquivos YAML criados.
-    * Utilizar IaC para configurar o Kubernetes. Recomendação: Terraform.
-    * Configurar a hospedagem a partir do registry gerado na tarefa anterior.
-    * Caso possua mais familiaridade, sinta-se motivado a customizar mais as configurações (secrets, ingress, etc.).
-- Adicionar um README ao projeto detalhando o processo e justificando as decisões tomadas. Recomendação: Markdown. Todos os refinamentos adicionados nos tópicos mencionados anteriormente, e demais ideias que possam melhorar o projeto serão considerados na avaliação da solução.
+### Decisões de Implementação
 
-Faça um fork e envie um PR com a sua solução, o tempo de entrega é de no máximo 4 dias e será contabilizado a partir da data do fork.
+1. **Azure Resource Group e Localização**:
+   - Foi criado um grupo de recursos chamado "datarisk-resources" na região "Brazil South".
 
-## Será avaliado:
+2. **Rede Virtual e Sub-Rede**:
+   - Uma rede virtual chamada "datarisk-vnet01" foi criada com o espaço de endereçamento "10.233.0.0/16".
+   - Uma sub-rede chamada "datarisk-subnet01" foi criada com o prefixo "10.233.1.0/24".
 
-- % do que foi entregue em relação ao que foi pedido.
-- Qualidade dos aquivos Terraform.
-- Boas práticas de infra e uso do Kubernetes.
-- Corretude das tarefas.
-- Uso eficiente em relação ao custo de máquina.
+3. **Grupo de Segurança de Rede (NSG)**:
+   - Foi criado um NSG chamado "datarisk-nsg01" com regras para permitir tráfego SSH, HTTP (porta 80), e HTTPS (porta 443).
+
+4. **Associação NSG com Sub-Rede**:
+   - A sub-rede foi associada ao NSG para aplicar as regras de segurança.
+
+5. **IP Público**:
+   - Um IP público dinâmico foi criado para a máquina virtual.
+
+6. **Interface de Rede**:
+   - Foi criada uma interface de rede associada à sub-rede e ao IP público.
+
+7. **Máquina Virtual Linux**:
+   - Uma máquina virtual chamada "datarisk-vm01" foi criada com a imagem Ubuntu 20.04 LTS.
+   - O tamanho da VM é "Standard_B2S".
+   - Foram configuradas credenciais de administração (usuário e senha).
+
+8. **Dockerfile**:
+   - O Dockerfile utiliza a imagem oficial do SDK do .NET para a fase de construção e a imagem oficial do ASP.NET para a execução da aplicação.
+   - São copiados os arquivos necessários e os pacotes são restaurados e a aplicação é compilada.
+   - A porta 8085 é exposta para acessar a aplicação.
+
+### Melhorias Potenciais
+
+1. **Gerenciamento de Credenciais**:
+   - Utilizar o Azure Key Vault para armazenar e gerenciar as credenciais de forma segura, em vez de mantê-las diretamente no código.
+
+2. **Armazenamento do Estado do Terraform**:
+   - Descomentar as seções relacionadas ao Azure Storage Account no arquivo `main.tf` para configurar um backend remoto do Terraform, proporcionando uma maior confiabilidade no controle de estado.
+
+3. **Variáveis do Terraform**:
+   - Utilização de variáveis do Terraform para tornar o código mais flexível e reutilizável.
+
+4. **Automatização de Build e Deploy**:
+   - Implemente pipelines de CI/CD para automatizar o processo de implantação da infraestrutura incluindo o AKS.
+
+### Execução do Projeto
+
+1. **Pré-requisitos**:
+   - Instale o Terraform o Docker e o Azure CLI em sua máquina local. Configure as variaveis necessarias para autenticação nos serviços usados
+
+2. **Provisionamento da Infraestrutura**:
+   - Execute `terraform init` e `terraform apply` no diretório onde o arquivo `main.tf` está localizado. Ou use o action Terraform Apply.
+
+3. **Limpeza da Infraestrutura**:
+   - Execute `terraform destroy` para descomissionar os recursos provisionados quando não forem mais necessários. Ou use o action Terraform Destroy.
