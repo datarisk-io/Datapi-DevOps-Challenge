@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Type="http://schemas.microsoft.com/packaging/2010/07/manifest" Target="/MSBuild.StructuredLogger.nuspec" Id="R051C988B4C6CAC3E" />
-  <Relationship Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="/package/services/metadata/core-properties/1615a6b8f1494e799cf83027f648b4d4.psmdcp" Id="R2E01EB760C62B0BD" />
-</Relationships>

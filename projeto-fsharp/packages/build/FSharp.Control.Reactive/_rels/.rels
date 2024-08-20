@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Type="http://schemas.microsoft.com/packaging/2010/07/manifest" Target="/FSharp.Control.Reactive.nuspec" Id="R8F62591979911D5D" />
-  <Relationship Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="/package/services/metadata/core-properties/7f884c4424b84e928aacde962e3ba69f.psmdcp" Id="RA5B554C911FE2183" />
-</Relationships>
