@@ -23,6 +23,6 @@ open Fake.Core.TargetOperators
 
 [<EntryPoint>]
 Target.runOrDefault "Run"
-/root/datarisk-projects/Datapi-DevOps-Challenge/projeto-fsharp/build.fsx
+D:\Lincoln\projetos\DevOps\Challenge\Datapi-DevOps-Challenge\projeto-fsharp\build.fsx
 --define:DOTNETCORE
---define:FAKE
+--define:FAKE
