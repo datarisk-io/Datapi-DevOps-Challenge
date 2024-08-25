@@ -34,3 +34,4 @@ logs/
 
 #For me
 infraservices/terras/.terraform*
+infraservices/terras/variable.tf

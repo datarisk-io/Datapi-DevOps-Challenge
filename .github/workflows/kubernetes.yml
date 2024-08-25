@@ -19,11 +19,10 @@ jobs:
     - name: Login to DockerHub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-    - name: Build Docker image
-      run: docker build -t docker.io/yurilinc/fsharp-app:latest .
-
-    - name: Push Docker image
-      run: docker push docker.io/yurilinc/fsharp-app:latest
+    - name: Build and Push Docker Image
+      run: |
+        docker build -t docker.io/yurilinc/fsharp-app:latest -f projeto-fsharp/Dockerfile .
+        docker push docker.io/yurilinc/fsharp-app:latest
 
   deploy:
     runs-on: ubuntu-latest

@@ -1,29 +1,31 @@
-# Define the .NET SDK image as the build environment
+# Define a imagem base para o ambiente de construção
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
 
-# Set the working directory inside the container
+# Define o diretório de trabalho dentro do contêiner
 WORKDIR /workspace
 
-# Copy all necessary files to the build environment
+# Copia todos os arquivos do projeto para o diretório de trabalho
 COPY projeto-fsharp .
 
-# Restore dependencies using the provided script
-RUN bash restore.sh
+# Instala dotnet tool e paket
+RUN dotnet tool restore \
+    && dotnet paket install \
+    && dotnet paket restore
 
-# Compile the application using the build script
+# Compila o projeto
 RUN dotnet fake run build.fsx --target "Build"
 
-# Define the runtime environment for the application
+# Define a imagem base para o ambiente de runtime
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 
-# Set the working directory for the runtime environment
+# Define o diretório de trabalho para o ambiente de runtime
 WORKDIR /app
 
-# Copy the built application from the builder stage to the runtime stage
+# Copia o resultado da compilação do estágio de construção para o ambiente de runtime
 COPY --from=builder /workspace/src/Server/out /app
 
-# Expose the application port
+# Exponha a porta na qual a aplicação estará escutando
 EXPOSE 8085
 
-# Specify the command to run the application
+# Define o comando para iniciar a aplicação
 CMD ["dotnet", "Server.dll"]

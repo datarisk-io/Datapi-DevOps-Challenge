@@ -23,7 +23,8 @@ variable "admin_username" {
   type        = string
 }
 
+#Alternative vault key or .env
 variable "subscription_id" {
-  default = "44060d5b-e2df-40c6-bfae-8ad6e8fc4f2e"
+  default = "xxxxxxx-xxxx-xxxxx-xxxx-xxxxxxxx"
   type = string
 }
