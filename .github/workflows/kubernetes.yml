@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI Pipeline
 
 on:
   push:
@@ -16,13 +16,13 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
-    - name: Login to DockerHub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+    - name: Login to GitHub Container Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
     - name: Build and Push Docker Image
       run: |
-        docker build -t docker.io/yurilinc/fsharp-app:latest -f projeto-fsharp/Dockerfile .
-        docker push docker.io/yurilinc/fsharp-app:latest
+        docker build -t ghcr.io/${{ github.repository_owner }}/fsharp-app:latest -f projeto-fsharp/Dockerfile .
+        docker push ghcr.io/${{ github.repository_owner }}/fsharp-app:latest
 
   deploy:
     runs-on: ubuntu-latest
