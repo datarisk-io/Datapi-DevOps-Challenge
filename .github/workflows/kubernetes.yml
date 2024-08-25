@@ -35,14 +35,3 @@ jobs:
       uses: azure/setup-kubectl@v3
       with:
         version: 'v1.21.0'
-
-    - name: Authenticate to Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Set up kubectl
-      run: az aks get-credentials --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_AKS_CLUSTER }}
-
-    - name: Deploy to Kubernetes
-      run: kubectl apply -f deploy.yml
