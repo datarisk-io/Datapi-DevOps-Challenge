@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    name: Build and Push Docker Image
     runs-on: ubuntu-latest
 
     steps:
@@ -25,14 +26,23 @@ jobs:
         docker push ghcr.io/${{ github.repository_owner }}/fsharp-app:latest
 
   deploy:
+    name: Deploy to Kubernetes
     runs-on: ubuntu-latest
     needs: build
 
     steps:
     - name: Set up Kubernetes
-      uses: azure/setup-kubectl@v3 
+      uses: azure/setup-kubectl@v3
       with:
         version: 'v1.21.0'
+
+    - name: Authenticate to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Set up kubectl
+      run: az aks get-credentials --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_AKS_CLUSTER }}
 
     - name: Deploy to Kubernetes
       run: kubectl apply -f deploy.yml
