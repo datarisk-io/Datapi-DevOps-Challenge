@@ -3,7 +3,7 @@ name: Terraform Plan
 on:
   pull_request:
     paths:
-      - infraservices/terras/**
+      - 'infraservices/terras/**'
 
 jobs:
   plan:
@@ -17,18 +17,20 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 1.9.5
-      
-      - name: Terraform Init
-        run: terraform init
-        working-directory: infraservices/terras
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.0 # Atualize para a versão desejada
 
-      - name: Terraform Plan
-        run: terraform plan
-        working-directory: infraservices/terras
+    - name: Terraform Init
+      run: terraform init
+      working-directory: infraservices/terras
+
+    - name: Terraform Plan
+      run: terraform plan
+      working-directory: infraservices/terras
+      env:
+        DEBUG: true
