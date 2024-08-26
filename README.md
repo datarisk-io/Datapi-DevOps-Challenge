@@ -1,30 +1,108 @@
-# Datapi DevOps Challenge
+## Documentação do Projeto Datapi DevOps Challenge
 
-Para melhor entendermos o seu nível técnico, nós preparamos este desafio como parte do nosso processo de contratação. Por isso, tenha em mente que não é necessário cumprir com todos os pontos mencionados, nem cumpri-los em uma ordem específica.
+### 1. Estrutura do Projeto
 
-O importante é entregar o que você conseguir fazer, com a devida documentação.
+#### **Diretório `infraservices`**
 
-# Desafios
+- **`terras/`**:
+  - Contém arquivos de configuração do Terraform para provisionamento da infraestrutura na Azure.
 
-Segue abaixo uma lista de desafios abrangendo várias áreas de responsabilidade para um DevOps no time do Datapi. Nossa sugestão é tentar seguir cada item na ordem apresentada, porém você está livre para atuar nos pontos que quiser e tiver mais familiaridade.
+  **Arquivos:**
+  - `main.tf`:
+    - Define os recursos principais na Azure, incluindo Resource Group, Virtual Network, Subnet, Network Interface, Virtual Machine e Public IP.
+  - `output.tf`:
+    - Define as saídas do Terraform, que fornecem informações sobre o estado dos recursos criados.
+  - `provider.tf`:
+    - Configura o provedor Azure com as credenciais e recursos necessários.
+  - `variable.tf`:
+    - Define variáveis usadas para parametrizar a configuração da infraestrutura.
 
-- Instanciar uma VM numa cloud provider. Recomendação: Microsoft Azure.
-    - Criar a configuração dessa VM usando uma ferramenta de IaC (Infrastructure as Code). Recomendação: Terraform.
-    - Criar um job de CI (Continuous Integration) para aplicar a configuração da ferramenta de provisionamento. Recomendação: GitHub Actions.
-- Adicionar um Dockerfile à aplicação disponibilizada na pasta `projeto-fsharp/` para containerizar o mesmo. Note que foi utilizada a linguagem F# (.NET) para escrever a aplicação. Para facilitar o entendimento do projeto, adicionamos um README.md com instruções de teste e uso do mesmo localmente. Você deverá ser capaz de traduzir essas instruções para a criação do Dockerfile.
-    - Criar um job de CI para enviar a imagem gerada para um Docker Registry. Recomendação: GitHub Container Registry.
-- Criar os manifestos YAML para hospedar a aplicação usando Kubernetes. Nesse ponto os testes podem ser realizados apenas localmente, porém devem ser apresentados os arquivos YAML criados.
-    * Utilizar IaC para configurar o Kubernetes. Recomendação: Terraform.
-    * Configurar a hospedagem a partir do registry gerado na tarefa anterior.
-    * Caso possua mais familiaridade, sinta-se motivado a customizar mais as configurações (secrets, ingress, etc.).
-- Adicionar um README ao projeto detalhando o processo e justificando as decisões tomadas. Recomendação: Markdown. Todos os refinamentos adicionados nos tópicos mencionados anteriormente, e demais ideias que possam melhorar o projeto serão considerados na avaliação da solução.
+- **`k8s/`**:
+  - Contém arquivos de configuração para Kubernetes.
 
-Faça um fork e envie um PR com a sua solução, o tempo de entrega é de no máximo 4 dias e será contabilizado a partir da data do fork.
+  **Arquivos:**
+  - `deploy.yml`:
+    - Define o Deployment e o Service para a aplicação F# no Kubernetes.
+    - **Deployment**:
+      - Configura o Deployment da aplicação F#, incluindo o número de réplicas, a imagem Docker e os recursos solicitados (CPU e memória).
+    - **Service**:
+      - Define o Service Kubernetes para expor a aplicação F# externamente, utilizando um LoadBalancer.
 
-## Será avaliado:
+- **`token/`**:
+  - Contém arquivos de chave e autenticação para a infraestrutura.
 
-- % do que foi entregue em relação ao que foi pedido.
-- Qualidade dos aquivos Terraform.
-- Boas práticas de infra e uso do Kubernetes.
-- Corretude das tarefas.
-- Uso eficiente em relação ao custo de máquina.
+  **Arquivos:**
+  - `id_rsa.pub`:
+    - Chave pública SSH para autenticação na máquina virtual provisionada.
+
+#### **Diretório `projeto-fsharp`**
+
+- **Contém o código da aplicação F# e o Dockerfile para criar a imagem Docker da aplicação.**
+
+  **Arquivos:**
+  - `Dockerfile`:
+    - Define as etapas para construir a imagem Docker da aplicação F#, incluindo a configuração do ambiente de execução e a cópia dos arquivos de build.
+  - `build.fsx`:
+    - Script de build da aplicação F#.
+  - `restore.sh`:
+    - Script para restaurar as dependências da aplicação.
+  - `README.md`:
+    - Documento explicativo sobre o projeto F# e instruções de uso.
+
+---
+
+### 2. Documentação dos Arquivos e Funcionalidades
+
+#### **Terraform**
+
+- **`main.tf`**:
+  - **Resource Group**:
+    - Cria um grupo de recursos na Azure.
+  - **Virtual Network**:
+    - Cria uma rede virtual com um espaço de endereços específico.
+  - **Subnet**:
+    - Cria uma sub-rede dentro da rede virtual.
+  - **Network Interface**:
+    - Cria uma interface de rede para a máquina virtual.
+  - **Linux Virtual Machine**:
+    - Provisiona uma máquina virtual Linux com configuração de rede e autenticação SSH.
+  - **Public IP**:
+    - Cria um IP público para acesso externo à máquina virtual.
+
+- **`output.tf`**:
+  - **resource_group_name**: Nome do grupo de recursos.
+  - **virtual_network_name**: Nome da rede virtual.
+  - **subnet_id**: ID da sub-rede.
+  - **vm_public_ip**: Endereço IP público da máquina virtual.
+
+- **`provider.tf`**:
+  - Configuração do provedor Azure com as credenciais e configuração necessárias para o Terraform.
+
+- **`variable.tf`**:
+  - Define variáveis usadas em `main.tf`, como nome do grupo de recursos, localização e IDs de assinatura.
+
+#### **Kubernetes**
+
+- **`deploy.yml`**:
+  - **Deployment**:
+    - Define como a aplicação F# será implantada no Kubernetes, incluindo a configuração da imagem Docker e os recursos necessários.
+  - **Service**:
+    - Define como a aplicação será exposta externamente usando um LoadBalancer.
+
+#### **GitHub Actions**
+
+- **`.github/workflows/kubernetes.yml`**:
+  - **Build Job**:
+    - Configura o Docker Buildx.
+    - Faz login no DockerHub usando credenciais armazenadas em segredos.
+    - Constrói e faz push da imagem Docker para o DockerHub.
+  - **Deploy Job**:
+    - Configura o `kubectl` para interagir com o cluster Kubernetes.
+    - Aplica o arquivo `deploy.yml` para realizar o deploy da aplicação no Kubernetes.
+
+- **`terra.yml`**:
+  - **Terraform Job**:
+    - Configura o Terraform para executar o `terraform plan` e verificar as mudanças na infraestrutura.
+    - Usa variáveis de ambiente para autenticação com Azure.
+
+---

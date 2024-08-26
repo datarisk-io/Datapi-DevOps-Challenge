@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fsharp-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fsharp-app
+  template:
+    metadata:
+      labels:
+        app: fsharp-app
+    spec:
+      containers:
+      - name: fsharp-app
+        image: docker.io/yurilinc/fsharp-app
+        ports:
+        - containerPort: 8085
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"

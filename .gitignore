@@ -1,3 +1,4 @@
+.gitignore
 .fable/
 .idea/
 .ionide/
@@ -22,6 +23,7 @@ docs-build/
 build/
 __pycache__
 
+
 # Extra
 *errors.txt
 *logs.txt
@@ -29,3 +31,7 @@ __pycache__
 \#*\#
 .\#*
 logs/
+
+#For me
+infraservices/terras/.terraform*
+infraservices/terras/variable.tf
