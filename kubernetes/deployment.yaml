@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datapi-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datapi
+  template:
+    metadata:
+      labels:
+        app: datapi
+    spec:
+      containers:
+      - name: datapi-container
+        image: ghcr.io/rhrlima/datapi:latest
+        ports:
+        - containerPort: 8085
+      imagePullSecrets:
+        - name: registry-secret
